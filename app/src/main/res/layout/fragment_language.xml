@@ -10,13 +10,15 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/green"/>
+        android:background="@color/green"
+        android:text="Polski"/>
 
     <Button
         android:id="@+id/button_english"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/red"/>
+        android:background="@color/red"
+        android:text="English"/>
 
 </LinearLayout>
