@@ -39,11 +39,11 @@ public class LanguageFragment extends Fragment implements View.OnClickListener {
         switch (view.getId()){
             case R.id.button_polish:
                 Toast.makeText(getActivity(), "buttonPolishClicked", Toast.LENGTH_SHORT).show();
-                //set language in settings to polish
+                //TODO set language in settings to polish
                 break;
             case R.id.button_english:
                 Toast.makeText(getActivity(), "buttonEnglishClicked", Toast.LENGTH_SHORT).show();
-                //set language in settings to english
+                //TODO set language in settings to english
                 break;
             default:
                 Log.e(LANGUAGE_TAG, "Incorrect button id");
@@ -51,7 +51,7 @@ public class LanguageFragment extends Fragment implements View.OnClickListener {
         }
         getActivity().getSupportFragmentManager().beginTransaction()
                 .setCustomAnimations(R.anim.abc_fade_in, R.anim.abc_fade_out, R.anim.abc_fade_in, R.anim.abc_fade_out)
-                .replace(R.id.container, new GridSelectorFragment())
+                .replace(R.id.firststartcontainer, new GridSelectorFragment())
                 .addToBackStack(null)
                 .commit();
     }
