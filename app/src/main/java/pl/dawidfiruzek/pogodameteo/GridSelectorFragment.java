@@ -49,7 +49,10 @@ public class GridSelectorFragment extends Fragment implements View.OnClickListen
                 Log.e(GRID_SELECT_TAG, "Incorrect button id");
                 break;
         }
-        getActivity().getSupportFragmentManager().popBackStack(null, getActivity().getSupportFragmentManager().POP_BACK_STACK_INCLUSIVE);
-        getActivity().finish();
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(R.anim.abc_fade_in, R.anim.abc_fade_out, R.anim.abc_fade_in, R.anim.abc_fade_out)
+                .replace(R.id.firststartcontainer, new UpdateMethodFragment())
+                .addToBackStack(null)
+                .commit();
     }
 }

@@ -6,8 +6,11 @@ import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -15,7 +18,8 @@ import java.util.ArrayList;
 
 public class MainActivity extends ActionBarActivity {
 
-    private boolean firstStart;
+    public static final String TAG = "Pogoda Meteo";
+    public static boolean firstStart = true;
 
     private ListView mDrawerList;
     private DrawerLayout mDrawerLayout;
@@ -37,16 +41,101 @@ public class MainActivity extends ActionBarActivity {
         }
 
         //TODO read from preferences
-        firstStart = true;
         if(firstStart){
             Intent intent = new Intent(this, FirstStartActivity.class);
             startActivity(intent);
-            firstStart = false;
+            finish();
+            //TODO set firstStart to false after set all initial prefs
         }
 
         getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.color.darkblue));
+
+        mNavDrawerTitles = getResources().getStringArray(R.array.navigation_drawer_titles);
+        mNavDrawerSubtitles = getResources().getStringArray(R.array.navigation_drawer_subtitles);
+        mNavDrawerIcons = getResources().obtainTypedArray(R.array.navigation_drawer_icons);
+
+        for(int i = 0; i < mNavDrawerTitles.length; ++i){
+            mNavItems.add(new NavigationListItem(mNavDrawerTitles[i], mNavDrawerSubtitles[i], mNavDrawerIcons.getResourceId(i,-1)));
+        }
+
+        mNavDrawerIcons.recycle();
+
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.main_activity_drawer_layout);
+        mDrawerList = (ListView) findViewById(R.id.start_activity_left_drawer_list);
+        DrawerListAdapter adapter = new DrawerListAdapter(this, mNavItems);
+        mDrawerList.setAdapter(adapter);
+
+        mDrawerToggle = new ActionBarDrawerToggle(
+                this,
+                mDrawerLayout,
+                R.string.open_drawer,
+                R.string.close_drawer){
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                supportInvalidateOptionsMenu();
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+                supportInvalidateOptionsMenu();
+            }
+        };
+
+        mDrawerToggle.setDrawerIndicatorEnabled(true);
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
+        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                onClickNavigationDrawerItem(position);
+            }
+        });
     }
 
+    private void onClickNavigationDrawerItem(int position) {
+        switch(position){
+            case 0:
+                break;
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            default:
+                Log.e(TAG, "Unexpected navigation drawer item id");
+                break;
+        }
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState){
+        super.onPostCreate(savedInstanceState);
+        mDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(mDrawerLayout.isDrawerOpen(mDrawerList)){
+            mDrawerLayout.closeDrawers();
+        }
+        else super.onBackPressed();
+    }
+
+    @Override
+    public boolean onMenuOpened(int featureId, Menu menu) {
+        if(! mDrawerLayout.isDrawerOpen(mDrawerList)){
+            mDrawerLayout.openDrawer(mDrawerList);
+        }
+        else mDrawerLayout.closeDrawers();
+        return super.onMenuOpened(featureId, menu);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -63,7 +152,12 @@ public class MainActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_search_city) {
+            return true;
+        }
+
+        // Activate navigation drawer toggle
+        if(mDrawerToggle.onOptionsItemSelected(item)){
             return true;
         }
 

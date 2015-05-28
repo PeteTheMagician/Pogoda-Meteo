@@ -1,8 +1,10 @@
 package pl.dawidfiruzek.pogodameteo;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +13,7 @@ import android.view.ViewGroup;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class UpdateMethodFragment extends Fragment {
+public class UpdateMethodFragment extends Fragment implements View.OnClickListener {
 
 
     public UpdateMethodFragment() {
@@ -23,8 +25,31 @@ public class UpdateMethodFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_update_method, container, false);
+        View v = inflater.inflate(R.layout.fragment_update_method, container, false);
+
+        v.findViewById(R.id.button_use_gps).setOnClickListener(this);
+        v.findViewById(R.id.button_use_city).setOnClickListener(this);
+
+        return v;
     }
 
+    @Override
+    public void onClick(View v) {
+        switch(v.getId()){
+            case R.id.button_use_gps:
+                break;
+            case R.id.button_use_city:
+                break;
+            default:
+                //TODO add tag
+                Log.e("TAG", "Button doesn't exist with that id");
+        }
 
+        getActivity().getSupportFragmentManager().popBackStack(null, getActivity().getSupportFragmentManager().POP_BACK_STACK_INCLUSIVE);
+        Intent intent = new Intent(getActivity(), MainActivity.class);
+        //TODO remove setting flag as a static field! do it in prefs
+        MainActivity.firstStart = false;
+        startActivity(intent);
+        getActivity().finish();
+    }
 }
