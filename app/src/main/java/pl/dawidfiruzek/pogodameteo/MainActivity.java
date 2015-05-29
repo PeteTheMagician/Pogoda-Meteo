@@ -156,6 +156,10 @@ public class MainActivity extends ActionBarActivity {
             return true;
         }
 
+        if(id == R.id.action_show_legend){
+            return true;
+        }
+
         // Activate navigation drawer toggle
         if(mDrawerToggle.onOptionsItemSelected(item)){
             return true;
