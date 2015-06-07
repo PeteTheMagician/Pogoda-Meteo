@@ -107,6 +107,9 @@ public class MainActivity extends ActionBarActivity {
             case 2:
                 break;
             case 3:
+                Intent intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
+                mDrawerLayout.closeDrawers();
                 break;
             default:
                 Log.e(TAG, "Unexpected navigation drawer item id");

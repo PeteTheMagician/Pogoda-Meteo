@@ -20,6 +20,10 @@
             android:name=".FirstStartActivity"
             android:label="@string/title_activity_first_start" >
         </activity>
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings" >
+        </activity>
     </application>
 
 </manifest>
