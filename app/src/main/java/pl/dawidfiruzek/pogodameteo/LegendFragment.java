@@ -23,7 +23,11 @@ public class LegendFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_legend, container, false);
+        View v = inflater.inflate(R.layout.fragment_legend, container, false);
+
+        //TODO switch preferences and set corresponding legend
+
+        return v;
     }
 
 
