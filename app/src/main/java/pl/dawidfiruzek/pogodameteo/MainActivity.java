@@ -100,21 +100,28 @@ public class MainActivity extends ActionBarActivity {
 
     private void onClickNavigationDrawerItem(int position) {
         switch(position){
+            //Comment
             case 0:
                 break;
+            //GPS based weather
             case 1:
                 break;
+            //Favourite cities
             case 2:
                 break;
+            //Settings
             case 3:
                 Intent intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);
-                mDrawerLayout.closeDrawers();
+                break;
+            //Info
+            case 4:
                 break;
             default:
                 Log.e(TAG, "Unexpected navigation drawer item id");
                 break;
         }
+        mDrawerLayout.closeDrawers();
     }
 
     @Override

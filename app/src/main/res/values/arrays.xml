@@ -17,10 +17,10 @@
     </string-array>
 
     <array name="navigation_drawer_icons">
-        <item>@drawable/ic_action_person</item>
-        <item>@drawable/ic_action_location_found</item>
-        <item>@drawable/ic_action_important</item>
-        <item>@drawable/ic_action_settings</item>
-        <item>@drawable/ic_action_about</item>
+        <item>@drawable/ic_person_black_24dp</item>
+        <item>@drawable/ic_my_location_black_24dp</item>
+        <item>@drawable/ic_star_black_24dp</item>
+        <item>@drawable/ic_settings_black_24dp</item>
+        <item>@drawable/ic_info_outline_black_24dp</item>
     </array>
 </resources>
