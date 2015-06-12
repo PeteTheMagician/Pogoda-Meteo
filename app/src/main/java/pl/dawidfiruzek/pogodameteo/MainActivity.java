@@ -19,7 +19,15 @@ import java.util.ArrayList;
 public class MainActivity extends ActionBarActivity {
 
     public static final String TAG = "Pogoda Meteo";
+    public static final String TYPE = "FRAGMENT_TYPE";
     public static boolean firstStart = true;
+    public enum SETTINGS_FRAGMENT{
+        SEARCH,
+        COMMENT,
+        FAVOURITES,
+        SETTINGS,
+        INFO
+    };
 
     private ListView mDrawerList;
     private DrawerLayout mDrawerLayout;
@@ -99,32 +107,37 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void onClickNavigationDrawerItem(int position) {
+        Intent intent = new Intent(this, SettingsActivity.class);
         switch(position){
-            //GPS based weather
-            case 0:
+            case 0: //GPS based weather
+                mDrawerLayout.closeDrawers();
                 break;
-            //City based weather
-            case 1:
-            //Comment
+            case 1: //City based weather
+//                intent.putExtra(TYPE, SETTINGS_FRAGMENT.CITY);
+                mDrawerLayout.closeDrawers();
                 break;
-            case 2:
+            case 2: //Comment
+                intent.putExtra(TYPE, SETTINGS_FRAGMENT.COMMENT);
+                startActivity(intent);
                 break;
-            //Favourite cities
-            case 3:
+            case 3: //Favourite cities
+                intent.putExtra(TYPE, SETTINGS_FRAGMENT.FAVOURITES);
+                startActivity(intent);
                 break;
             //Settings
             case 4:
-                Intent intent = new Intent(this, SettingsActivity.class);
+                intent.putExtra(TYPE, SETTINGS_FRAGMENT.SETTINGS);
                 startActivity(intent);
                 break;
             //Info
             case 5:
+                intent.putExtra(TYPE, SETTINGS_FRAGMENT.INFO);
+                startActivity(intent);
                 break;
             default:
                 Log.e(TAG, "Unexpected navigation drawer item id");
                 break;
         }
-        mDrawerLayout.closeDrawers();
     }
 
     @Override
@@ -166,10 +179,15 @@ public class MainActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_search_city) {
+            Intent intent = new Intent(this, SettingsActivity.class);
+            intent.putExtra(TYPE, SETTINGS_FRAGMENT.SEARCH);
+            startActivity(intent);
+            mDrawerLayout.closeDrawers();
             return true;
         }
 
         if(id == R.id.action_show_legend){
+            mDrawerLayout.closeDrawers();
             return true;
         }
 
