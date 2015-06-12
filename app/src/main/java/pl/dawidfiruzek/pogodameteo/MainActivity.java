@@ -100,22 +100,25 @@ public class MainActivity extends ActionBarActivity {
 
     private void onClickNavigationDrawerItem(int position) {
         switch(position){
-            //Comment
+            //GPS based weather
             case 0:
                 break;
-            //GPS based weather
+            //City based weather
             case 1:
+            //Comment
                 break;
-            //Favourite cities
             case 2:
                 break;
-            //Settings
+            //Favourite cities
             case 3:
+                break;
+            //Settings
+            case 4:
                 Intent intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);
                 break;
             //Info
-            case 4:
+            case 5:
                 break;
             default:
                 Log.e(TAG, "Unexpected navigation drawer item id");

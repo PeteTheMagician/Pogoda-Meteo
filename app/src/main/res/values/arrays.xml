@@ -1,24 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="navigation_drawer_titles">
-        <item>Comment</item>
         <item>GPS</item>
+        <item>Current city</item>
+        <item>Comment</item>
         <item>Favourites</item>
         <item>Settings</item>
         <item>Info</item>
     </string-array>
 
     <string-array name="navigation_drawer_subtitles">
-        <item>Synoptic\'s comment</item>
         <item>Weather for current position</item>
+        <item>Weather for ... city</item>
+        <item>Synoptic\'s comment</item>
         <item>Favourite cities</item>
         <item>User preferences</item>
         <item>Information about app</item>
     </string-array>
 
     <array name="navigation_drawer_icons">
-        <item>@drawable/ic_person_black_24dp</item>
         <item>@drawable/ic_my_location_black_24dp</item>
+        <item>@drawable/ic_location_city_black_24dp</item>
+        <item>@drawable/ic_person_black_24dp</item>
         <item>@drawable/ic_star_black_24dp</item>
         <item>@drawable/ic_settings_black_24dp</item>
         <item>@drawable/ic_info_outline_black_24dp</item>
