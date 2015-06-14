@@ -187,8 +187,9 @@ public class MainActivity extends ActionBarActivity {
         }
 
         if(id == R.id.action_show_legend){
+            //TODO show legend
             mDrawerLayout.closeDrawers();
-            return true;
+            return false;
         }
 
         // Activate navigation drawer toggle
