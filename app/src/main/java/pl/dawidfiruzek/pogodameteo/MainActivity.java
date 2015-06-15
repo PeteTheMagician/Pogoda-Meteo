@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -148,8 +149,12 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     public void onBackPressed() {
+        ImageView legend = (ImageView)findViewById(R.id.image_legend);
         if(mDrawerLayout.isDrawerOpen(mDrawerList)){
             mDrawerLayout.closeDrawers();
+        }
+        if(legend.getVisibility() == View.VISIBLE){
+            legend.setVisibility(View.INVISIBLE);
         }
         else super.onBackPressed();
     }

@@ -1,6 +1,7 @@
 package pl.dawidfiruzek.pogodameteo;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.Display;
@@ -8,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -20,6 +22,10 @@ import android.widget.ImageView;
 public class WeatherFragment extends Fragment {
 
     View v;
+    ImageView legendView;
+    ImageView weatherView;
+    int width;
+    int height;
     public WeatherFragment() {
     }
 
@@ -31,9 +37,23 @@ public class WeatherFragment extends Fragment {
 
         WindowManager wm = (WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE);
         Display display = wm.getDefaultDisplay();
-        int width = display.getWidth();
-        ImageView iv = (ImageView)v.findViewById(R.id.image_legend);
-        iv.setMaxWidth(width/2);
+        height = display.getHeight();
+        legendView = (ImageView)v.findViewById(R.id.image_legend);
+        //around original proportion of the image h/w = 2.035714285714286
+        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            legendView.setMaxWidth(height / 2);
+            legendView.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    int action = event.getActionMasked();
+                    //TODO make legend invisible on swipe
+                    if(action == MotionEvent.ACTION_MOVE){
+                        legendView.setVisibility(View.INVISIBLE);
+                    }
+                    return true;
+                }
+            });
+        }
 
         return v;
     }
@@ -60,4 +80,5 @@ public class WeatherFragment extends Fragment {
 
         return super.onOptionsItemSelected(item);
     }
+
 }
