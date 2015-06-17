@@ -1,6 +1,7 @@
 package pl.dawidfiruzek.pogodameteo;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -153,7 +154,7 @@ public class MainActivity extends ActionBarActivity {
         if(mDrawerLayout.isDrawerOpen(mDrawerList)){
             mDrawerLayout.closeDrawers();
         }
-        else if(legend.getVisibility() == View.VISIBLE){
+        else if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT && legend.getVisibility() == View.VISIBLE){
             legend.setVisibility(View.INVISIBLE);
         }
         else super.onBackPressed();
