@@ -153,7 +153,7 @@ public class MainActivity extends ActionBarActivity {
         if(mDrawerLayout.isDrawerOpen(mDrawerList)){
             mDrawerLayout.closeDrawers();
         }
-        if(legend.getVisibility() == View.VISIBLE){
+        else if(legend.getVisibility() == View.VISIBLE){
             legend.setVisibility(View.INVISIBLE);
         }
         else super.onBackPressed();

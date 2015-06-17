@@ -62,7 +62,7 @@ public class SettingsActivity extends ActionBarActivity {
         getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.color.darkblue));
         // TODO make string of it
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_navigate_before_black_24dp);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_navigate_before_white_24dp);
     }
 
     @Override
