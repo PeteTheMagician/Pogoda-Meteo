@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 
 /**
@@ -26,6 +28,7 @@ public class WeatherFragment extends Fragment {
     ImageView weatherView;
     int width;
     int height;
+
     public WeatherFragment() {
     }
 
@@ -81,4 +84,16 @@ public class WeatherFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
+    public void onUpdateWeatherFromWeb(MainActivity.ICON_CLICKED icon){
+        switch (icon){
+            case GPS:
+                Toast.makeText(getActivity(), "GPS", Toast.LENGTH_SHORT).show();
+                break;
+            case CITY:
+                Toast.makeText(getActivity(), "CITY", Toast.LENGTH_SHORT).show();
+                break;
+            default:
+                Log.e(MainActivity.TAG, "Unexpected button passed to update weather");
+        }
+    }
 }

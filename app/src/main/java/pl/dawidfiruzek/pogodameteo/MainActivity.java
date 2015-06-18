@@ -22,23 +22,23 @@ public class MainActivity extends ActionBarActivity {
 
     public static final String TAG = "Pogoda Meteo";
     public static final String TYPE = "FRAGMENT_TYPE";
+    public static final String FRAGMENT_TAG = "WEATHER_FRAGMENT_TAG";
     public static boolean firstStart = true;
-    public enum SETTINGS_FRAGMENT{
+    public enum ICON_CLICKED {
         SEARCH,
+        LEGEND,
+        GPS,
+        CITY,
         COMMENT,
         FAVOURITES,
         SETTINGS,
         INFO
-    };
+    }
 
     private ListView mDrawerList;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private ArrayList<NavigationListItem> mNavItems = new ArrayList<NavigationListItem>();
-
-    private String[] mNavDrawerTitles;
-    private String[] mNavDrawerSubtitles;
-    private TypedArray mNavDrawerIcons;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +46,7 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new WeatherFragment())
+                    .add(R.id.container, new WeatherFragment(), FRAGMENT_TAG)
                     .commit();
         }
 
@@ -60,12 +60,12 @@ public class MainActivity extends ActionBarActivity {
 
         getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.color.darkblue));
 
-        mNavDrawerTitles = getResources().getStringArray(R.array.navigation_drawer_titles);
-        mNavDrawerSubtitles = getResources().getStringArray(R.array.navigation_drawer_subtitles);
-        mNavDrawerIcons = getResources().obtainTypedArray(R.array.navigation_drawer_icons);
+        String[] mNavDrawerTitles = getResources().getStringArray(R.array.navigation_drawer_titles);
+        String[] mNavDrawerSubtitles = getResources().getStringArray(R.array.navigation_drawer_subtitles);
+        TypedArray mNavDrawerIcons = getResources().obtainTypedArray(R.array.navigation_drawer_icons);
 
         for(int i = 0; i < mNavDrawerTitles.length; ++i){
-            mNavItems.add(new NavigationListItem(mNavDrawerTitles[i], mNavDrawerSubtitles[i], mNavDrawerIcons.getResourceId(i,-1)));
+            mNavItems.add(new NavigationListItem(mNavDrawerTitles[i], mNavDrawerSubtitles[i], mNavDrawerIcons.getResourceId(i, -1)));
         }
 
         mNavDrawerIcons.recycle();
@@ -112,28 +112,29 @@ public class MainActivity extends ActionBarActivity {
         Intent intent = new Intent(this, SettingsActivity.class);
         switch(position){
             case 0: //GPS based weather
+                onWeatherUpdate(ICON_CLICKED.GPS);
                 mDrawerLayout.closeDrawers();
                 break;
             case 1: //City based weather
-//                intent.putExtra(TYPE, SETTINGS_FRAGMENT.CITY);
+                onWeatherUpdate(ICON_CLICKED.CITY);
                 mDrawerLayout.closeDrawers();
                 break;
             case 2: //Comment
-                intent.putExtra(TYPE, SETTINGS_FRAGMENT.COMMENT);
+                intent.putExtra(TYPE, ICON_CLICKED.COMMENT);
                 startActivity(intent);
                 break;
             case 3: //Favourite cities
-                intent.putExtra(TYPE, SETTINGS_FRAGMENT.FAVOURITES);
+                intent.putExtra(TYPE, ICON_CLICKED.FAVOURITES);
                 startActivity(intent);
                 break;
             //Settings
             case 4:
-                intent.putExtra(TYPE, SETTINGS_FRAGMENT.SETTINGS);
+                intent.putExtra(TYPE, ICON_CLICKED.SETTINGS);
                 startActivity(intent);
                 break;
             //Info
             case 5:
-                intent.putExtra(TYPE, SETTINGS_FRAGMENT.INFO);
+                intent.putExtra(TYPE, ICON_CLICKED.INFO);
                 startActivity(intent);
                 break;
             default:
@@ -186,7 +187,7 @@ public class MainActivity extends ActionBarActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_search_city) {
             Intent intent = new Intent(this, SettingsActivity.class);
-            intent.putExtra(TYPE, SETTINGS_FRAGMENT.SEARCH);
+            intent.putExtra(TYPE, ICON_CLICKED.SEARCH);
             startActivity(intent);
             mDrawerLayout.closeDrawers();
             return true;
@@ -204,5 +205,17 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onWeatherUpdate(ICON_CLICKED icon) {
+        WeatherFragment weatherFragment = (WeatherFragment) getSupportFragmentManager()
+                .findFragmentByTag(FRAGMENT_TAG);
+
+        if(weatherFragment != null){
+            weatherFragment.onUpdateWeatherFromWeb(icon);
+        }
+        else {
+            Log.e(TAG, "Cannot find fragment by tag");
+        }
     }
 }

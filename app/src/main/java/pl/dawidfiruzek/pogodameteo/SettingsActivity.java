@@ -13,16 +13,16 @@ public class SettingsActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        MainActivity.SETTINGS_FRAGMENT extra = (MainActivity.SETTINGS_FRAGMENT)getIntent().getSerializableExtra(MainActivity.TYPE);
+        MainActivity.ICON_CLICKED extra = (MainActivity.ICON_CLICKED)getIntent().getSerializableExtra(MainActivity.TYPE);
 
         if(savedInstanceState == null){
             android.support.v4.app.FragmentManager manager = getSupportFragmentManager();
             switch(extra) {
                 case SEARCH:
                     manager
-                            .beginTransaction()
-                            .add(R.id.settings_container, new SearchFragment())
-                            .commit();
+                        .beginTransaction()
+                        .add(R.id.settings_container, new SearchFragment())
+                        .commit();
                     getSupportActionBar().setTitle("Search");
                     break;
                 case COMMENT:
@@ -36,14 +36,14 @@ public class SettingsActivity extends ActionBarActivity {
                     manager
                         .beginTransaction()
                         .add(R.id.settings_container, new CitiesFragment())
-                            .commit();
+                        .commit();
                     getSupportActionBar().setTitle("Favourites");
                     break;
                 case SETTINGS:
                     manager
                         .beginTransaction()
                         .add(R.id.settings_container, new SettingsFragment())
-                            .commit();
+                        .commit();
                     getSupportActionBar().setTitle("Settings");
                     break;
                 case INFO:
