@@ -41,6 +41,7 @@ public class WeatherFragment extends Fragment {
         WindowManager wm = (WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE);
         Display display = wm.getDefaultDisplay();
         height = display.getHeight();
+        weatherView = (ImageView)v.findViewById(R.id.image_weather);
         legendView = (ImageView)v.findViewById(R.id.image_legend);
         //around original proportion of the image h/w = 2.035714285714286
         if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
@@ -90,6 +91,9 @@ public class WeatherFragment extends Fragment {
                 Toast.makeText(getActivity(), "GPS", Toast.LENGTH_SHORT).show();
                 break;
             case CITY:
+                //TODO save image to db, to not reload on screen rotate
+                FetchWeatherTask fetchWeatherTask = new FetchWeatherTask(weatherView);
+                fetchWeatherTask.execute();
                 Toast.makeText(getActivity(), "CITY", Toast.LENGTH_SHORT).show();
                 break;
             default:
