@@ -9,7 +9,6 @@
         android:id="@+id/image_weather"
         android:scaleType="fitXY"
         android:layout_gravity="start"
-        android:src="@drawable/test_mgram_pict"
         android:layout_weight="0.7"/>
     <ImageView
         android:layout_width="0dp"

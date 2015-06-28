@@ -16,7 +16,7 @@ public class FirstStartActivity extends ActionBarActivity {
                     .commit();
         }
 
-        getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.color.darkblue));
+        getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.color.blue));
         //TODO make a string value
         getSupportActionBar().setTitle("Initial settings");
 

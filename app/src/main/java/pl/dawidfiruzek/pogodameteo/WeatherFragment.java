@@ -90,6 +90,8 @@ public class WeatherFragment extends Fragment {
             case GPS:
                 Toast.makeText(getActivity(), "GPS", Toast.LENGTH_SHORT).show();
                 break;
+            case REFRESH:
+                //TODO handle it in proper way
             case CITY:
                 //TODO save image to db, to not reload on screen rotate
                 FetchWeatherTask fetchWeatherTask = new FetchWeatherTask(weatherView);

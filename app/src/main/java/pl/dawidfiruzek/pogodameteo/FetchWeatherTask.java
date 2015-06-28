@@ -1,6 +1,7 @@
 package pl.dawidfiruzek.pogodameteo;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -9,7 +10,10 @@ import android.widget.ImageView;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 
+import java.io.BufferedInputStream;
+import java.io.InputStream;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -26,11 +30,11 @@ public class FetchWeatherTask extends AsyncTask<Void, Void, Bitmap> {
 //
 //    http://new.meteo.pl/um/php/mgram_search.php?NALL=50.25&EALL=19&lang=pl"
 //    http://new.meteo.pl/um/php/meteorogram_id_um.php?ntype=0n&id=462
-//    http://new.meteo.pl/um/metco/mgram_pict.php?ntype=0u&fdate=2015061812&row=466&col=232&lang=pl
+//    http://new.meteo.pl/um/metco/mgram_pict.php
 //
 //    http://new.meteo.pl/php/mgram_search.php?NALL=50.25&EALL=19&lang=pl
 //    http://new.meteo.pl/php/meteorogram_id_coamps.php?ntype=2n&id=462
-//    http://new.meteo.pl/metco/mgram_pict.php?ntype=2n&fdate=2015061812&row=151&col=90&lang=pl
+//    http://new.meteo.pl/metco/mgram_pict.php
     @Override
     protected Bitmap doInBackground(Void... params) {
         Bitmap weatherImage = null;
@@ -49,15 +53,8 @@ public class FetchWeatherTask extends AsyncTask<Void, Void, Bitmap> {
             URL meteoUrl = new URL(builder.toString());
             Log.v(MainActivity.TAG, meteoUrl.toString());
 
-            String testUrl = "http://new.meteo.pl/php/meteorogram_id_coamps.php?ntype=2n&id=462";
-//
-//            URLConnection urlConnection = meteoUrl.openConnection();
-//            urlConnection.connect();
-//            InputStream is = urlConnection.getInputStream();
-//            BufferedInputStream bis = new BufferedInputStream(is);
-//            weatherImage = BitmapFactory.decodeStream(bis);
-//            bis.close();
-//            is.close();
+            String testUrl = "http://new.meteo.pl/um/php/meteorogram_id_um.php?ntype=0n&id=462";
+
             //TODO URL build on id of the city or GPS position
             org.jsoup.nodes.Document doc = Jsoup.connect(testUrl).timeout(10000).get();
             Element script = doc.select("script").last();
@@ -70,16 +67,33 @@ public class FetchWeatherTask extends AsyncTask<Void, Void, Bitmap> {
             while(m.find()) {
                 meteorogramParams = m.group();
                 Log.v(MainActivity.TAG, meteorogramParams);
-//                String[] separatedParams = meteorogramParams.split("var ");
-//                for(String s : separatedParams) {
-//                    Log.v(MainActivity.TAG, s);
-//                }
             }
 
             if(meteorogramParams != null){
                 //example result: var fcstdate = "2015062612";var ntype ="0n";var lang ="pl";var id="462";var act_x = 232;var act_y = 466;
-                //TODO split parameters to save it.
+                meteorogramParams = meteorogramParams.replace("\"", "")
+                        .replace(";var ", "&")
+                        .replace("var ", "?")
+                        .replace("fcstdate", "fdate")
+                        .replace("act_x", "col")
+                        .replace("act_y", "row")
+                        .replace(" ", "")
+                        .replace(";", "");
+
+                Log.v(MainActivity.TAG, meteorogramParams);
             }
+            else {
+                Log.e(MainActivity.TAG, "Unsuccessful image address parsing");
+            }
+            String meteorogramImg = "http://new.meteo.pl/um/metco/mgram_pict.php" + meteorogramParams;
+            URL meteoImg = new URL(meteorogramImg);
+            URLConnection urlConnection = meteoImg.openConnection();
+            urlConnection.connect();
+            InputStream is = urlConnection.getInputStream();
+            BufferedInputStream bis = new BufferedInputStream(is);
+            weatherImage = BitmapFactory.decodeStream(bis);
+            bis.close();
+            is.close();
 
         } catch (Exception e){
             Log.e(MainActivity.TAG, "Unsuccessful image downloading");

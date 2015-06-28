@@ -25,6 +25,7 @@ public class MainActivity extends ActionBarActivity {
     public static final String FRAGMENT_TAG = "WEATHER_FRAGMENT_TAG";
     public static boolean firstStart = true;
     public enum ICON_CLICKED {
+        REFRESH,
         SEARCH,
         LEGEND,
         GPS,
@@ -58,7 +59,7 @@ public class MainActivity extends ActionBarActivity {
             //TODO set firstStart to false after set all initial prefs
         }
 
-        getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.color.darkblue));
+        getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.color.blue));
 
         String[] mNavDrawerTitles = getResources().getStringArray(R.array.navigation_drawer_titles);
         String[] mNavDrawerSubtitles = getResources().getStringArray(R.array.navigation_drawer_subtitles);
@@ -185,6 +186,10 @@ public class MainActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
+        if (id == R.id.action_refresh){
+            onWeatherUpdate(ICON_CLICKED.REFRESH);
+            return true;
+        }
         if (id == R.id.action_search_city) {
             Intent intent = new Intent(this, SettingsActivity.class);
             intent.putExtra(TYPE, ICON_CLICKED.SEARCH);
@@ -194,7 +199,7 @@ public class MainActivity extends ActionBarActivity {
         }
 
         if(id == R.id.action_show_legend){
-            //TODO show legend
+            //legend showing handled in fragment
             mDrawerLayout.closeDrawers();
             return false;
         }
