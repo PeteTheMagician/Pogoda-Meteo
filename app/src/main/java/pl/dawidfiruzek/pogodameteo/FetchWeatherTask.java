@@ -51,7 +51,7 @@ public class FetchWeatherTask extends AsyncTask<Void, Void, Bitmap> {
 
         try{
             URL meteoUrl = new URL(builder.toString());
-            Log.v(MainActivity.TAG, meteoUrl.toString());
+            Log.d(MainActivity.TAG, meteoUrl.toString());
 
             String testUrl = "http://new.meteo.pl/um/php/meteorogram_id_um.php?ntype=0n&id=462";
 
@@ -63,10 +63,10 @@ public class FetchWeatherTask extends AsyncTask<Void, Void, Bitmap> {
             Matcher m = pattern.matcher(script.html());
 
             String meteorogramParams = null;
-//            Log.v(MainActivity.TAG, script.toString());
+            Log.d(MainActivity.TAG, script.toString());
             while(m.find()) {
                 meteorogramParams = m.group();
-                Log.v(MainActivity.TAG, meteorogramParams);
+                Log.d(MainActivity.TAG, meteorogramParams);
             }
 
             if(meteorogramParams != null){
@@ -80,7 +80,7 @@ public class FetchWeatherTask extends AsyncTask<Void, Void, Bitmap> {
                         .replace(" ", "")
                         .replace(";", "");
 
-                Log.v(MainActivity.TAG, meteorogramParams);
+                Log.d(MainActivity.TAG, meteorogramParams);
             }
             else {
                 Log.e(MainActivity.TAG, "Unsuccessful image address parsing");

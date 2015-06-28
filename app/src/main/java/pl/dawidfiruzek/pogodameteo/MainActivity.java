@@ -23,7 +23,7 @@ public class MainActivity extends ActionBarActivity {
     public static final String TAG = "Pogoda Meteo";
     public static final String TYPE = "FRAGMENT_TYPE";
     public static final String FRAGMENT_TAG = "WEATHER_FRAGMENT_TAG";
-    public static boolean firstStart = true;
+    public static boolean firstStart = false;
     public enum ICON_CLICKED {
         REFRESH,
         SEARCH,
