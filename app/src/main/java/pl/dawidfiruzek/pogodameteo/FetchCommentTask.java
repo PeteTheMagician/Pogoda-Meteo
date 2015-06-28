@@ -13,10 +13,10 @@ import java.net.URL;
 /**
  * Created by fks on 2015-06-28.
  */
-public class FetchComment extends AsyncTask <Void, Void, String> {
+public class FetchCommentTask extends AsyncTask <Void, Void, String> {
 
     private TextView mCommentText;
-    FetchComment(TextView textView){
+    FetchCommentTask(TextView textView){
         mCommentText = textView;
     }
     @Override

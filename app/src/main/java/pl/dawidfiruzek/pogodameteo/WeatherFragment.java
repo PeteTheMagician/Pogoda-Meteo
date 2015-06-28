@@ -58,6 +58,7 @@ public class WeatherFragment extends Fragment {
                 }
             });
         }
+        onFetchWeather();
 
         return v;
     }
@@ -93,13 +94,16 @@ public class WeatherFragment extends Fragment {
             case REFRESH:
                 //TODO handle it in proper way
             case CITY:
-                //TODO save image to db, to not reload on screen rotate
-                FetchWeatherTask fetchWeatherTask = new FetchWeatherTask(weatherView);
-                fetchWeatherTask.execute();
-                Toast.makeText(getActivity(), "CITY", Toast.LENGTH_SHORT).show();
+                onFetchWeather();
                 break;
             default:
                 Log.e(MainActivity.TAG, "Unexpected button passed to update weather");
         }
+    }
+
+    private void onFetchWeather() {
+        FetchWeatherTask fetchWeatherTask = new FetchWeatherTask(weatherView);
+        fetchWeatherTask.execute();
+        Toast.makeText(getActivity(), "CITY", Toast.LENGTH_SHORT).show();
     }
 }

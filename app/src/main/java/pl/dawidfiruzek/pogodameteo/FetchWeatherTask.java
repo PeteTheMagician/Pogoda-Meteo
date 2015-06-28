@@ -63,7 +63,7 @@ public class FetchWeatherTask extends AsyncTask<Void, Void, Bitmap> {
             Matcher m = pattern.matcher(script.html());
 
             String meteorogramParams = null;
-            Log.d(MainActivity.TAG, script.toString());
+//            Log.d(MainActivity.TAG, script.toString());
             while(m.find()) {
                 meteorogramParams = m.group();
                 Log.d(MainActivity.TAG, meteorogramParams);

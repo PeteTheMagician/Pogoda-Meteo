@@ -27,8 +27,8 @@ public class SynopticsCommentFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_synoptics_comment, container, false);
 
-        FetchComment fetchComment = new FetchComment((TextView) v.findViewById(R.id.text_comment));
-        fetchComment.execute();
+        FetchCommentTask fetchCommentTask = new FetchCommentTask((TextView) v.findViewById(R.id.text_comment));
+        fetchCommentTask.execute();
         Toast.makeText(getActivity(), "Comment", Toast.LENGTH_LONG).show();
         return v;
     }

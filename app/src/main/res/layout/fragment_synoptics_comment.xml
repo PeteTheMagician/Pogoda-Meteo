@@ -3,10 +3,14 @@
     android:layout_height="match_parent"
     tools:context="pl.dawidfiruzek.pogodameteo.SynopticsCommentFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:id="@+id/text_comment"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical">
+        <TextView
+            android:id="@+id/text_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </ScrollView>
 
 </FrameLayout>
