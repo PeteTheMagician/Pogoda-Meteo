@@ -10,7 +10,8 @@
         <TextView
             android:id="@+id/text_comment"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:linksClickable="true"/>
     </ScrollView>
 
 </FrameLayout>

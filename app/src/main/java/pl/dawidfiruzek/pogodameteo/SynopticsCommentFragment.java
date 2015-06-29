@@ -30,6 +30,7 @@ public class SynopticsCommentFragment extends Fragment {
         FetchCommentTask fetchCommentTask = new FetchCommentTask((TextView) v.findViewById(R.id.text_comment));
         fetchCommentTask.execute();
         Toast.makeText(getActivity(), "Comment", Toast.LENGTH_LONG).show();
+
         return v;
     }
 

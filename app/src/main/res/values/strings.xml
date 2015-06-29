@@ -12,4 +12,5 @@
     <string name="close_drawer">Close navigation drawer</string>
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="action_refresh">Refresh</string>
+    <string name="prefs_language">Language</string>
 </resources>

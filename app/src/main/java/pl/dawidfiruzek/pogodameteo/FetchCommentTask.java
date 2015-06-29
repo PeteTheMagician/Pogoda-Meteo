@@ -1,6 +1,7 @@
 package pl.dawidfiruzek.pogodameteo;
 
 import android.os.AsyncTask;
+import android.text.Html;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -32,11 +33,8 @@ public class FetchCommentTask extends AsyncTask <Void, Void, String> {
 
             downloadedText = comment.toString();
             if(downloadedText != null){
-                downloadedText = downloadedText //px;">
-                        .replaceAll("<div.+\">", "")
-                .replace("<p> ", "")
-                .replaceAll("</.+>", "")
-                .replace("&#x2014;", "-");
+                downloadedText = downloadedText
+                        .replaceAll("</*div.*>", "");
             }
             else {
                 Log.e(MainActivity.TAG, "Unsuccessfull comment fetching");
@@ -51,6 +49,6 @@ public class FetchCommentTask extends AsyncTask <Void, Void, String> {
 
     @Override
     protected void onPostExecute(String s) {
-        mCommentText.setText(s);
+        mCommentText.setText(Html.fromHtml(s));
     }
 }
