@@ -29,7 +29,6 @@ public class SettingsFragment extends PreferenceFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
-        // Inflate the layout for this fragment
         return view;
     }
 

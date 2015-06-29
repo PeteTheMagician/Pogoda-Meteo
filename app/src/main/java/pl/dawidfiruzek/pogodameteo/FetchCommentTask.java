@@ -2,6 +2,7 @@ package pl.dawidfiruzek.pogodameteo;
 
 import android.os.AsyncTask;
 import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -49,6 +50,7 @@ public class FetchCommentTask extends AsyncTask <Void, Void, String> {
 
     @Override
     protected void onPostExecute(String s) {
+        mCommentText.setMovementMethod(LinkMovementMethod.getInstance());
         mCommentText.setText(Html.fromHtml(s));
     }
 }
