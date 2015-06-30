@@ -13,4 +13,12 @@
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="action_refresh">Refresh</string>
     <string name="prefs_language">Language</string>
+    <string name="language_change">Default Language</string>
+    <string name="prefs_grid">Grid</string>
+    <string name="grid_change">Default Grid</string>
+    <string name="prefs_update">Update Method</string>
+    <string name="prefs_city">City</string>
+    <string name="update_change">Default Update Method</string>
+    <string name="city_change">Default City</string>
+    <string name="general_preferences">General Preferences</string>
 </resources>

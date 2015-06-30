@@ -1,15 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="@string/prefs_language">
-        <CheckBoxPreference
-            android:key="checkbox_preference"
-            android:title="Dupa"
-            android:summary="Lorem Ipsum" />
-        <CheckBoxPreference
-            android:key="tttoooo"
-            android:title="DDeettt"
-            android:summary="Huehyue" />
-
+    <PreferenceCategory android:title="@string/general_preferences">
+        <ListPreference
+            android:key="language_preference"
+            android:title="@string/prefs_language"
+            android:summary="@string/language_change"
+            android:entries="@array/preferences_languages"
+            android:entryValues="@array/preferences_languages_values" />
+        <ListPreference
+            android:key="grid_preference"
+            android:title="@string/prefs_grid"
+            android:summary="@string/grid_change"
+            android:entries="@array/preferences_grid"
+            android:entryValues="@array/preferences_grid_values" />
+        <Preference
+            android:key="city_preference"
+            android:title="@string/prefs_city"
+            android:summary="@string/city_change"/>
+        <ListPreference
+            android:key="update_preference"
+            android:title="@string/prefs_update"
+            android:summary="@string/update_change"
+            android:entries="@array/preferences_update"
+            android:entryValues="@array/preferences_update_values" />
     </PreferenceCategory>
 </PreferenceScreen>

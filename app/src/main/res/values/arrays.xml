@@ -23,6 +23,32 @@
         <item>English</item>
     </string-array>
 
+    <string-array name="preferences_languages_values">
+        <item>pl</item>
+        <item>en</item>
+    </string-array>
+
+    <string-array name="preferences_grid">
+        <item>UM 4km, weather for 60/72h</item>
+        <item>COAMPS 13km, weather for 84h</item>
+    </string-array>
+
+    <string-array name="preferences_grid_values">
+        <item>um</item>
+        <item>coamps</item>
+    </string-array>
+
+    <string-array name="preferences_update">
+        <item>GPS</item>
+        <item>Default City</item>
+    </string-array>
+
+    <string-array name="preferences_update_values">
+        <item>gps</item>
+        <item>city</item>
+    </string-array>
+
+
     <array name="navigation_drawer_icons">
         <item>@drawable/ic_my_location_black_24dp</item>
         <item>@drawable/ic_location_city_black_24dp</item>
