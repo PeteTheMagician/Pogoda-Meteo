@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <item name="lightblue" type="color">#64b5f6</item>
+    <item name="lightblue" type="color">#e3f2fd</item>
     <item name="blue" type="color">#2196f3</item>
     <item name="darkblue" type="color">#1976d2</item>
     <!-- TODO change colours according to ddesign guidelines -->

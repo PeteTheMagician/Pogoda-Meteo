@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -107,6 +108,26 @@ public class MainActivity extends ActionBarActivity {
                 onClickNavigationDrawerItem(position);
             }
         });
+        mDrawerList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener(){
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                onLongClickNavigationDrawerItem(position);
+                return true;
+            }
+        });
+    }
+
+    private void onLongClickNavigationDrawerItem(int position) {
+        switch (position){
+            case 1://City based weather
+                Toast.makeText(this, "dupadupa", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this, SettingsActivity.class);
+                intent.putExtra(TYPE, ICON_CLICKED.SEARCH);
+                startActivity(intent);
+                break;
+            default:
+                break;
+        }
     }
 
     private void onClickNavigationDrawerItem(int position) {
