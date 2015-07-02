@@ -1,7 +1,9 @@
 package pl.dawidfiruzek.pogodameteo;
 
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,8 +16,6 @@ import android.widget.Toast;
  * A simple {@link Fragment} subclass.
  */
 public class GridSelectorFragment extends Fragment implements View.OnClickListener {
-
-    public static String GRID_SELECT_TAG = "GridSelectorFragment";
 
     public GridSelectorFragment() {
         // Required empty public constructor
@@ -36,17 +36,21 @@ public class GridSelectorFragment extends Fragment implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        SharedPreferences.Editor editor = sharedPreferences.edit();
         switch (v.getId()){
             case R.id.button_grid_um:
                 Toast.makeText(getActivity(), "UM grid selected", Toast.LENGTH_SHORT).show();
-                //TODO set UM grid to settings
+                editor.putString("grid_preference", "um");
+                editor.commit();
                 break;
             case R.id.button_grid_coamps:
                 Toast.makeText(getActivity(), "COAMPS grid selected", Toast.LENGTH_SHORT).show();
-                //TODO set COAMPS grid to settings
+                editor.putString("grid_preference", "coamps");
+                editor.commit();
                 break;
             default:
-                Log.e(GRID_SELECT_TAG, "Incorrect button id");
+                Log.e(MainActivity.TAG, "Incorrect button id");
                 break;
         }
         getActivity().getSupportFragmentManager().beginTransaction()

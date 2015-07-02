@@ -1,9 +1,11 @@
 package pl.dawidfiruzek.pogodameteo;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -24,7 +26,6 @@ public class MainActivity extends ActionBarActivity {
     public static final String TAG = "Pogoda Meteo";
     public static final String TYPE = "FRAGMENT_TYPE";
     public static final String FRAGMENT_TAG = "WEATHER_FRAGMENT_TAG";
-    public static boolean firstStart = false;
     public enum ICON_CLICKED {
         REFRESH,
         SEARCH,
@@ -44,6 +45,15 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        SharedPreferences preferenceManager = PreferenceManager.getDefaultSharedPreferences(this);
+        Boolean firstStart = preferenceManager.getBoolean("first_time_launch_preference", true);
+        if(firstStart){
+            Intent intent = new Intent(this, FirstStartActivity.class);
+            startActivity(intent);
+            finish();
+        }
+        //TODO do not create fragment before initial settings!
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         if (savedInstanceState == null) {
@@ -52,13 +62,6 @@ public class MainActivity extends ActionBarActivity {
                     .commit();
         }
 
-        //TODO read from preferences
-        if(firstStart){
-            Intent intent = new Intent(this, FirstStartActivity.class);
-            startActivity(intent);
-            finish();
-            //TODO set firstStart to false after set all initial prefs
-        }
 
         getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.color.blue));
 

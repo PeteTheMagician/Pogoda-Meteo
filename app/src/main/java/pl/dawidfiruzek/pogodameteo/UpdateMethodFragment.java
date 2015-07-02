@@ -2,7 +2,9 @@ package pl.dawidfiruzek.pogodameteo;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -35,20 +37,25 @@ public class UpdateMethodFragment extends Fragment implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        SharedPreferences.Editor editor = sharedPreferences.edit();
         switch(v.getId()){
             case R.id.button_use_gps:
+                editor.putString("update_preference", "gps");
                 break;
             case R.id.button_use_city:
+                editor.putString("update_preference", "city");
                 break;
             default:
-                //TODO add tag
-                Log.e("TAG", "Button doesn't exist with that id");
+                Log.e(MainActivity.TAG, "Button doesn't exist with that id");
         }
 
         getActivity().getSupportFragmentManager().popBackStack(null, getActivity().getSupportFragmentManager().POP_BACK_STACK_INCLUSIVE);
         Intent intent = new Intent(getActivity(), MainActivity.class);
-        //TODO remove setting flag as a static field! do it in prefs
-        MainActivity.firstStart = false;
+
+        editor.putBoolean("first_time_launch_preference", false);
+        editor.commit();
+
         startActivity(intent);
         getActivity().finish();
     }

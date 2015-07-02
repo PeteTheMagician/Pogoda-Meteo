@@ -37,6 +37,7 @@ public class WeatherFragment extends Fragment {
                              Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         v = inflater.inflate(R.layout.fragment_weather, container, false);
+        Toast.makeText(getActivity(), "testdupatest", Toast.LENGTH_SHORT).show();
 
         WindowManager wm = (WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE);
         Display display = wm.getDefaultDisplay();

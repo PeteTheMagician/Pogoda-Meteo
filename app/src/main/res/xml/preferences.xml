@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="@string/general_preferences">
+    <PreferenceCategory
+        android:key="category_general"
+        android:title="@string/general_preferences">
         <ListPreference
             android:key="language_preference"
             android:title="@string/prefs_language"
@@ -14,15 +16,19 @@
             android:summary="@string/grid_change"
             android:entries="@array/preferences_grid"
             android:entryValues="@array/preferences_grid_values" />
-        <Preference
-            android:key="city_preference"
-            android:title="@string/prefs_city"
-            android:summary="@string/city_change"/>
         <ListPreference
             android:key="update_preference"
             android:title="@string/prefs_update"
             android:summary="@string/update_change"
             android:entries="@array/preferences_update"
             android:entryValues="@array/preferences_update_values" />
+        <Preference
+            android:key="city_preference"
+            android:title="@string/prefs_city"
+            android:summary="@string/city_change" />
+        <CheckBoxPreference
+            android:key="first_time_launch_preference"
+            android:title="First time launch"
+            android:defaultValue="true"/>
     </PreferenceCategory>
 </PreferenceScreen>

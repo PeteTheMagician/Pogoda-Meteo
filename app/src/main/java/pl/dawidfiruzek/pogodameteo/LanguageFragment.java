@@ -1,7 +1,9 @@
 package pl.dawidfiruzek.pogodameteo;
 
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,8 +16,6 @@ import android.widget.Toast;
  * A simple {@link Fragment} subclass.
  */
 public class LanguageFragment extends Fragment implements View.OnClickListener {
-
-    public static String LANGUAGE_TAG = "LanguageFragment";
 
     public LanguageFragment() {
         // Required empty public constructor
@@ -36,17 +36,21 @@ public class LanguageFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View view){
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        SharedPreferences.Editor editor = sharedPreferences.edit();
         switch (view.getId()){
             case R.id.button_polish:
                 Toast.makeText(getActivity(), "buttonPolishClicked", Toast.LENGTH_SHORT).show();
-                //TODO set language in settings to polish
+                editor.putString("language_preference", "pl");
+                editor.commit();
                 break;
             case R.id.button_english:
                 Toast.makeText(getActivity(), "buttonEnglishClicked", Toast.LENGTH_SHORT).show();
-                //TODO set language in settings to english
+                editor.putString("language_preference", "en");
+                editor.commit();
                 break;
             default:
-                Log.e(LANGUAGE_TAG, "Incorrect button id");
+                Log.e(MainActivity.TAG, "Incorrect button id");
                 break;
         }
         getActivity().getSupportFragmentManager().beginTransaction()
