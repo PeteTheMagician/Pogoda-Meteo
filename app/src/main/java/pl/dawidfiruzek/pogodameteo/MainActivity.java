@@ -45,6 +45,8 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.color.blue));
 
         SharedPreferences preferenceManager = PreferenceManager.getDefaultSharedPreferences(this);
         Boolean firstStart = preferenceManager.getBoolean("first_time_launch_preference", true);
@@ -53,71 +55,69 @@ public class MainActivity extends ActionBarActivity {
             startActivity(intent);
             finish();
         }
-        //TODO do not create fragment before initial settings!
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new WeatherFragment(), FRAGMENT_TAG)
-                    .commit();
+        else {
+            Toast.makeText(this, "dupadupa", Toast.LENGTH_SHORT).show();
+            setContentView(R.layout.activity_main);
+            if (savedInstanceState == null) {
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.container, new WeatherFragment(), FRAGMENT_TAG)
+                        .commit();
+            }
+
+            String[] mNavDrawerTitles = getResources().getStringArray(R.array.navigation_drawer_titles);
+            String[] mNavDrawerSubtitles = getResources().getStringArray(R.array.navigation_drawer_subtitles);
+            TypedArray mNavDrawerIcons = getResources().obtainTypedArray(R.array.navigation_drawer_icons);
+
+            for (int i = 0; i < mNavDrawerTitles.length; ++i) {
+                mNavItems.add(new NavigationListItem(mNavDrawerTitles[i], mNavDrawerSubtitles[i], mNavDrawerIcons.getResourceId(i, -1)));
+            }
+
+            mNavDrawerIcons.recycle();
+
+            mDrawerLayout = (DrawerLayout) findViewById(R.id.main_activity_drawer_layout);
+            mDrawerList = (ListView) findViewById(R.id.start_activity_left_drawer_list);
+            DrawerListAdapter adapter = new DrawerListAdapter(this, mNavItems);
+            mDrawerList.setAdapter(adapter);
+
+            mDrawerToggle = new ActionBarDrawerToggle(
+                    this,
+                    mDrawerLayout,
+                    R.string.open_drawer,
+                    R.string.close_drawer) {
+
+                @Override
+                public void onDrawerOpened(View drawerView) {
+                    super.onDrawerOpened(drawerView);
+                    supportInvalidateOptionsMenu();
+                }
+
+                @Override
+                public void onDrawerClosed(View drawerView) {
+                    super.onDrawerClosed(drawerView);
+                    supportInvalidateOptionsMenu();
+                }
+            };
+
+            mDrawerToggle.setDrawerIndicatorEnabled(true);
+            mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
+
+            mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    onClickNavigationDrawerItem(position);
+                }
+            });
+            mDrawerList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                @Override
+                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                    onLongClickNavigationDrawerItem(position);
+                    return true;
+                }
+            });
         }
-
-
-        getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.color.blue));
-
-        String[] mNavDrawerTitles = getResources().getStringArray(R.array.navigation_drawer_titles);
-        String[] mNavDrawerSubtitles = getResources().getStringArray(R.array.navigation_drawer_subtitles);
-        TypedArray mNavDrawerIcons = getResources().obtainTypedArray(R.array.navigation_drawer_icons);
-
-        for(int i = 0; i < mNavDrawerTitles.length; ++i){
-            mNavItems.add(new NavigationListItem(mNavDrawerTitles[i], mNavDrawerSubtitles[i], mNavDrawerIcons.getResourceId(i, -1)));
-        }
-
-        mNavDrawerIcons.recycle();
-
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.main_activity_drawer_layout);
-        mDrawerList = (ListView) findViewById(R.id.start_activity_left_drawer_list);
-        DrawerListAdapter adapter = new DrawerListAdapter(this, mNavItems);
-        mDrawerList.setAdapter(adapter);
-
-        mDrawerToggle = new ActionBarDrawerToggle(
-                this,
-                mDrawerLayout,
-                R.string.open_drawer,
-                R.string.close_drawer){
-
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                supportInvalidateOptionsMenu();
-            }
-
-            @Override
-            public void onDrawerClosed(View drawerView) {
-                super.onDrawerClosed(drawerView);
-                supportInvalidateOptionsMenu();
-            }
-        };
-
-        mDrawerToggle.setDrawerIndicatorEnabled(true);
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-
-        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                onClickNavigationDrawerItem(position);
-            }
-        });
-        mDrawerList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener(){
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                onLongClickNavigationDrawerItem(position);
-                return true;
-            }
-        });
     }
 
     private void onLongClickNavigationDrawerItem(int position) {

@@ -39,24 +39,28 @@ public class UpdateMethodFragment extends Fragment implements View.OnClickListen
     public void onClick(View v) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         SharedPreferences.Editor editor = sharedPreferences.edit();
+        Intent intent = new Intent(getActivity(), MainActivity.class);
         switch(v.getId()){
             case R.id.button_use_gps:
                 editor.putString("update_preference", "gps");
+                startActivity(intent);
+                getActivity().finish();
                 break;
             case R.id.button_use_city:
                 editor.putString("update_preference", "city");
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .setCustomAnimations(R.anim.abc_fade_in, R.anim.abc_fade_out, R.anim.abc_fade_in, R.anim.abc_fade_out)
+                        .replace(R.id.firststartcontainer, new SearchFragment())
+                        .addToBackStack(null)
+                        .commit();
                 break;
             default:
                 Log.e(MainActivity.TAG, "Button doesn't exist with that id");
         }
 
-        getActivity().getSupportFragmentManager().popBackStack(null, getActivity().getSupportFragmentManager().POP_BACK_STACK_INCLUSIVE);
-        Intent intent = new Intent(getActivity(), MainActivity.class);
-
         editor.putBoolean("first_time_launch_preference", false);
         editor.commit();
 
-        startActivity(intent);
-        getActivity().finish();
+
     }
 }

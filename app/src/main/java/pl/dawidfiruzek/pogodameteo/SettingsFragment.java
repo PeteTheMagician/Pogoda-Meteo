@@ -37,6 +37,4 @@ public class SettingsFragment extends PreferenceFragment {
 //        preferenceCategory.removePreference(checkBoxPreference);
         return view;
     }
-
-
 }

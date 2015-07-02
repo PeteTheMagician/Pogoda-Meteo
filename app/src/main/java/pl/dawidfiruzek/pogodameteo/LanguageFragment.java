@@ -59,5 +59,4 @@ public class LanguageFragment extends Fragment implements View.OnClickListener {
                 .addToBackStack(null)
                 .commit();
     }
-
 }
