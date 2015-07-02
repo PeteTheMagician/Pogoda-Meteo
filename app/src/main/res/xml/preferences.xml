@@ -25,7 +25,8 @@
         <Preference
             android:key="city_preference"
             android:title="@string/prefs_city"
-            android:summary="@string/city_change" />
+            android:summary="@string/city_change"
+            android:defaultValue="462"/>
         <CheckBoxPreference
             android:key="first_time_launch_preference"
             android:title="First time launch"
