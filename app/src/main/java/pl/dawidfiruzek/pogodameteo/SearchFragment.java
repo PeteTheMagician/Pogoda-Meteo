@@ -2,9 +2,10 @@ package pl.dawidfiruzek.pogodameteo;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,16 +31,22 @@ public class SearchFragment extends Fragment {
         v.findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO make it fucking work!
-                final CharSequence test = "FirstStartActivity";
-                Log.d(MainActivity.TAG, "\\" + getActivity().getTitle() + "\\ " + "FirstStartActivity");
+                String referenceActivity = FirstStartActivity.class.getSimpleName();
+                String currentActivity = getActivity().getTitle().toString();
+                // TODO delete button and replace it by choosing city - mechanism stays the same
                 if(v.getId() == R.id.button) {
-                    if (getActivity().getTitle() == test) {
+                    if (currentActivity.equals(referenceActivity)) {
+                        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putBoolean("first_time_launch_preference", false);
+                        editor.commit();
+
                         Intent intent = new Intent(getActivity(), MainActivity.class);
                         startActivity(intent);
                         getActivity().finish();
                     }
                     else{
+                        //TODO handle it in normal way
                         Toast.makeText(getActivity(), "kopasdlkfjasfdlkj", Toast.LENGTH_SHORT).show();
                     }
                 }

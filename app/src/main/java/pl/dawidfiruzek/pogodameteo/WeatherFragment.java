@@ -103,7 +103,7 @@ public class WeatherFragment extends Fragment {
     }
 
     private void onFetchWeather() {
-        FetchWeatherTask fetchWeatherTask = new FetchWeatherTask(weatherView);
+        FetchWeatherTask fetchWeatherTask = new FetchWeatherTask(getActivity(), weatherView);
         fetchWeatherTask.execute();
         Toast.makeText(getActivity(), "CITY", Toast.LENGTH_SHORT).show();
     }

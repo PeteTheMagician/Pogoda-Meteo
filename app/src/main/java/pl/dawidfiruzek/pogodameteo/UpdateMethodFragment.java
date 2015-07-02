@@ -45,6 +45,8 @@ public class UpdateMethodFragment extends Fragment implements View.OnClickListen
                 editor.putString("update_preference", "gps");
                 startActivity(intent);
                 getActivity().finish();
+                editor.putBoolean("first_time_launch_preference", false);
+                editor.commit();
                 break;
             case R.id.button_use_city:
                 editor.putString("update_preference", "city");
@@ -57,10 +59,5 @@ public class UpdateMethodFragment extends Fragment implements View.OnClickListen
             default:
                 Log.e(MainActivity.TAG, "Button doesn't exist with that id");
         }
-
-        editor.putBoolean("first_time_launch_preference", false);
-        editor.commit();
-
-
     }
 }

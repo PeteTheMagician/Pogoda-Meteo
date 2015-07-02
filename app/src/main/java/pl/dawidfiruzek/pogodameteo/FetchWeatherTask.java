@@ -1,9 +1,12 @@
 package pl.dawidfiruzek.pogodameteo;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.ImageView;
 
@@ -23,10 +26,20 @@ import java.util.regex.Pattern;
 public class FetchWeatherTask extends AsyncTask<Void, Void, Bitmap> {
 
     private ImageView mImage;
+    private Context mContext;
 
-    public FetchWeatherTask(ImageView imageView){
+    public FetchWeatherTask(Context context, ImageView imageView){
         mImage = imageView;
+        mContext = context;
     }
+
+    @Override
+    protected Bitmap doInBackground(Void... params) {
+        Bitmap weatherImage = null;
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+        String gridModel = sharedPreferences.getString("grid_preference", "um");
+        String language = sharedPreferences.getString("language_preference", "pl");
 //
 //    http://new.meteo.pl/um/php/mgram_search.php?NALL=50.25&EALL=19&lang=pl"
 //    http://new.meteo.pl/um/php/meteorogram_id_um.php?ntype=0n&id=462
@@ -35,10 +48,7 @@ public class FetchWeatherTask extends AsyncTask<Void, Void, Bitmap> {
 //    http://new.meteo.pl/php/mgram_search.php?NALL=50.25&EALL=19&lang=pl
 //    http://new.meteo.pl/php/meteorogram_id_coamps.php?ntype=2n&id=462
 //    http://new.meteo.pl/metco/mgram_pict.php
-    @Override
-    protected Bitmap doInBackground(Void... params) {
-        Bitmap weatherImage = null;
-
+//        if()
         Uri.Builder builder = new Uri.Builder();
         //TODO czytane z bazy danych dla typu pogody UM/COAMPS
         builder.scheme("http")
