@@ -1,8 +1,10 @@
 package pl.dawidfiruzek.pogodameteo;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.Display;
@@ -44,6 +46,9 @@ public class WeatherFragment extends Fragment {
         height = display.getHeight();
         weatherView = (ImageView)v.findViewById(R.id.image_weather);
         legendView = (ImageView)v.findViewById(R.id.image_legend);
+
+        setLegendImage();
+
         //around original proportion of the image h/w = 2.035714285714286
         if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             legendView.setMaxWidth(height / 2);
@@ -62,6 +67,38 @@ public class WeatherFragment extends Fragment {
         onFetchWeather();
 
         return v;
+    }
+
+    public void setLegendImage() {
+        //setting legend for corresponding language
+        SharedPreferences preferenceManager = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String model = preferenceManager.getString("grid_preference", "um");
+        String language = preferenceManager.getString("language_preference", "pl");
+        if(language.equals("pl")){
+            if(model.equals("um")){
+                legendView.setImageResource(R.drawable.leg60_pl);
+            }
+            else if(model.equals("coamps")){
+                legendView.setImageResource(R.drawable.leg84_pl);
+            }
+            else {
+                Log.e(MainActivity.TAG, "Unexpectec model for Polish language");
+            }
+        }
+        else if(language.equals("en")){
+            if(model.equals("um")){
+                legendView.setImageResource(R.drawable.leg60_en);
+            }
+            else if(model.equals("coamps")){
+                legendView.setImageResource(R.drawable.leg84_en);
+            }
+            else {
+                Log.e(MainActivity.TAG, "Unexpectec model for English language");
+            }
+        }
+        else{
+            Log.e(MainActivity.TAG, "Unexpectec model");
+        }
     }
 
     @Override
