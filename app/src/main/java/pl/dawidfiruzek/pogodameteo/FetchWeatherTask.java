@@ -21,7 +21,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by fks on 2015-06-18.
+ * Class is responsible for fetching and setting newest weather from
+ * the www.meteo.pl website.
  */
 public class FetchWeatherTask extends AsyncTask<Void, Void, Bitmap> {
 
@@ -52,12 +53,14 @@ public class FetchWeatherTask extends AsyncTask<Void, Void, Bitmap> {
 
         Uri.Builder builder = new Uri.Builder();
         builder.scheme("http").authority("new.meteo.pl");
+
         if(gridModel.equals("um")){
             builder.appendPath("um");
         }
         builder.appendPath("php");
 
         if(updateMethod.equals("GPS")){
+            Log.d(MainActivity.TAG, "GPS update detected");
             builder
                     .appendPath("mgram_search.php")
                     //TODO enter actual values from GPS
@@ -65,6 +68,7 @@ public class FetchWeatherTask extends AsyncTask<Void, Void, Bitmap> {
                     .appendQueryParameter("EALL", "19").build();
         }
         else {
+            Log.d(MainActivity.TAG, "CITY update detected");
             if (gridModel.equals("um")) {
                 builder
                         .appendPath("meteorogram_id_um.php")

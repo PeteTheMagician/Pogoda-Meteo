@@ -19,6 +19,7 @@
     <string name="prefs_update">Update Method</string>
     <string name="prefs_city">City</string>
     <string name="update_change">Default Update Method</string>
-    <string name="city_change">Default City</string>
+    <string name="city_change">City</string>
     <string name="general_preferences">General Preferences</string>
+    <string name="default_city">462</string>
 </resources>
