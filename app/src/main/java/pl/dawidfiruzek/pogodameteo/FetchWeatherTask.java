@@ -1,5 +1,6 @@
 package pl.dawidfiruzek.pogodameteo;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -28,10 +29,21 @@ public class FetchWeatherTask extends AsyncTask<Void, Void, Bitmap> {
 
     private ImageView mImage;
     private Context mContext;
+    private ProgressDialog mProgressCircle;
 
     public FetchWeatherTask(Context context, ImageView imageView){
         mImage = imageView;
         mContext = context;
+
+        mProgressCircle = new ProgressDialog(mContext);
+        //TODO to string
+        mProgressCircle.setMessage("Downloading weather");
+        mProgressCircle.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+    }
+
+    @Override
+    protected void onPreExecute() {
+        mProgressCircle.show();
     }
 
     @Override
@@ -151,6 +163,7 @@ public class FetchWeatherTask extends AsyncTask<Void, Void, Bitmap> {
 
     @Override
     protected void onPostExecute(Bitmap result) {
+        mProgressCircle.dismiss();
         mImage.setImageBitmap(result);
     }
 }
