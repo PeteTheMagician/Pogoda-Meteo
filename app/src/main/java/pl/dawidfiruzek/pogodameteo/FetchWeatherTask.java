@@ -9,7 +9,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.widget.ImageView;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
@@ -27,22 +26,20 @@ import java.util.regex.Pattern;
  */
 public class FetchWeatherTask extends AsyncTask<Void, Void, Bitmap> {
 
-    private ImageView mImage;
+    public AsyncWeatherResponse delegate = null;
     private Context mContext;
     private ProgressDialog mProgressCircle;
 
-    public FetchWeatherTask(Context context, ImageView imageView){
-        mImage = imageView;
+    public FetchWeatherTask(Context context){
         mContext = context;
-
         mProgressCircle = new ProgressDialog(mContext);
-        //TODO to string
-        mProgressCircle.setMessage("Downloading weather");
-        mProgressCircle.setProgressStyle(ProgressDialog.STYLE_SPINNER);
     }
 
     @Override
     protected void onPreExecute() {
+        //TODO to string
+        mProgressCircle.setMessage("Downloading weather");
+        mProgressCircle.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         mProgressCircle.show();
     }
 
@@ -165,6 +162,6 @@ public class FetchWeatherTask extends AsyncTask<Void, Void, Bitmap> {
     @Override
     protected void onPostExecute(Bitmap result) {
         mProgressCircle.dismiss();
-        mImage.setImageBitmap(result);
+        delegate.processFinish(result);
     }
 }

@@ -2,6 +2,7 @@ package pl.dawidfiruzek.pogodameteo;
 
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -16,7 +17,7 @@ import android.widget.ImageView;
 /**
  * Fragment containing Weather Image fetched from the web
  */
-public class WeatherFragment extends Fragment {
+public class WeatherFragment extends Fragment implements AsyncWeatherResponse{
 
     FetchWeatherTask mFetchWeatherTask;
     ImageView mWeatherView;
@@ -71,7 +72,8 @@ public class WeatherFragment extends Fragment {
     /**
      * Fetching weather from the Web*/
     public void onUpdateWeatherFromWeb(){
-        mFetchWeatherTask = new FetchWeatherTask(getActivity(), mWeatherView);
+        mFetchWeatherTask = new FetchWeatherTask(getActivity());
+        mFetchWeatherTask.delegate = this;
         mFetchWeatherTask.execute();
         setLegendImage();
         Log.d(MainActivity.TAG, "Started fetching weather from web");
@@ -108,5 +110,10 @@ public class WeatherFragment extends Fragment {
         else{
             Log.e(MainActivity.TAG, "Unexpectec model");
         }
+    }
+
+    @Override
+    public void processFinish(Bitmap output) {
+        mWeatherView.setImageBitmap(output);
     }
 }
