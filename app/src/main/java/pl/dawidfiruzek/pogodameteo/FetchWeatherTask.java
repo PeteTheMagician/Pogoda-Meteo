@@ -104,6 +104,7 @@ public class FetchWeatherTask extends AsyncTask<Void, Void, Bitmap> {
             //TODO URL build on id of the city or GPS position
             org.jsoup.nodes.Document doc = Jsoup.connect(meteoUrl.toString()).timeout(10000).get();
             Element script = doc.select("script").last();
+
             //getting variables values that are needed to get meteorogram
             Pattern pattern = Pattern.compile("(?s)var\\s??(.+?);var\\s??(.+?)ntype(.+?);\\n");
             Matcher m = pattern.matcher(script.html());

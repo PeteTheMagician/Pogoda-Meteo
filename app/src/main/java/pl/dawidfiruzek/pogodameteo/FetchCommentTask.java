@@ -1,10 +1,7 @@
 package pl.dawidfiruzek.pogodameteo;
 
 import android.os.AsyncTask;
-import android.text.Html;
-import android.text.method.LinkMovementMethod;
 import android.util.Log;
-import android.widget.TextView;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -17,10 +14,8 @@ import java.net.URL;
  */
 public class FetchCommentTask extends AsyncTask <Void, Void, String> {
 
-    private TextView mCommentText;
-    FetchCommentTask(TextView textView){
-        mCommentText = textView;
-    }
+    public AsyncCommentResponse delegate = null;
+
     @Override
     protected String doInBackground(Void... params) {
         String downloadedText = null;
@@ -29,7 +24,7 @@ public class FetchCommentTask extends AsyncTask <Void, Void, String> {
             URL url = new URL("http://www.meteo.pl/komentarze/index1.php");
 
             Document document = Jsoup.connect(url.toString()).timeout(10000).get();
-            Element comment = document.select("div").last();
+            Element comment = document.select("div").get(3);
             Log.d(MainActivity.TAG, comment.toString());
 
             downloadedText = comment.toString();
@@ -49,8 +44,7 @@ public class FetchCommentTask extends AsyncTask <Void, Void, String> {
     }
 
     @Override
-    protected void onPostExecute(String s) {
-        mCommentText.setMovementMethod(LinkMovementMethod.getInstance());
-        mCommentText.setText(Html.fromHtml(s));
+    protected void onPostExecute(String result) {
+        delegate.processFinish(result);
     }
 }

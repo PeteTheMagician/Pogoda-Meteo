@@ -18,6 +18,7 @@ import android.widget.ImageView;
  */
 public class WeatherFragment extends Fragment {
 
+    FetchWeatherTask mFetchWeatherTask;
     ImageView mWeatherView;
     ImageView mLegendView;
 
@@ -61,11 +62,17 @@ public class WeatherFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onPause() {
+        mFetchWeatherTask.cancel(true);
+        super.onPause();
+    }
+
     /**
      * Fetching weather from the Web*/
     public void onUpdateWeatherFromWeb(){
-        FetchWeatherTask fetchWeatherTask = new FetchWeatherTask(getActivity(), mWeatherView);
-        fetchWeatherTask.execute();
+        mFetchWeatherTask = new FetchWeatherTask(getActivity(), mWeatherView);
+        mFetchWeatherTask.execute();
         setLegendImage();
         Log.d(MainActivity.TAG, "Started fetching weather from web");
     }
