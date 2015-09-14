@@ -6,6 +6,7 @@ import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -26,27 +27,25 @@ public class MainActivity extends ActionBarActivity {
     public static final String TAG = "Pogoda Meteo";
     public static final String TYPE = "FRAGMENT_TYPE";
     public static final String FRAGMENT_TAG = "WEATHER_FRAGMENT_TAG";
-    public SharedPreferences mPreferenceManager;
     public enum ICON_CLICKED {
-        REFRESH,
-        SEARCH,
-        LEGEND,
         GPS,
         CITY,
         COMMENT,
         FAVOURITES,
         SETTINGS,
-        INFO
+        INFO,
+        REFRESH,
+        SEARCH,
+        LEGEND;
     }
+    private SharedPreferences mPreferenceManager;
     private ListView mDrawerList;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
-    private ArrayList<NavigationListItem> mNavItems = new ArrayList<NavigationListItem>();
+    private ArrayList<NavigationListItem> mNavigationDrawerItems = new ArrayList<NavigationListItem>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.color.blue));
         /**
          * On the first start of the app new activity to set default values is run.
          * We set there default language, default grid, default update method and
@@ -55,169 +54,31 @@ public class MainActivity extends ActionBarActivity {
          * In case of any further runs MainActivity will be run and WeatherFragment
          * will be loaded.
          */
+        super.onCreate(savedInstanceState);
         mPreferenceManager = PreferenceManager.getDefaultSharedPreferences(this);
+        setActionBarParams();
 
-        String updateMethod = mPreferenceManager.getString("update_preference", "gps");
-        Log.d(TAG, updateMethod);
-        if(updateMethod.equals("gps")){
-            getSupportActionBar().setTitle("GPS");
-        }
-        else {
-            //TODO get city name from prefs
-            getSupportActionBar().setTitle("City");
-        }
-
-        Boolean firstStart = mPreferenceManager.getBoolean("first_time_launch_preference", true);
-        if(firstStart){
-            Intent intent = new Intent(this, FirstStartActivity.class);
-            startActivity(intent);
-            finish();
+        if(isFirstLaunch()){
+            startFirstLaunchActivity();
         }
         else {
             Log.d(TAG, "Loading WeatherFragment");
             setContentView(R.layout.activity_main);
             if (savedInstanceState == null) {
-                getSupportFragmentManager().beginTransaction()
-                        .add(R.id.container, new WeatherFragment(), FRAGMENT_TAG)
-                        .commit();
+                startWeatherFragment();
             }
-
-            /**
-             * Loading Titles, Subtitles and Icons to populate and set NavigationDrawer as enabled
-             */
-            String[] mNavDrawerTitles = getResources().getStringArray(R.array.navigation_drawer_titles);
-            String[] mNavDrawerSubtitles = getResources().getStringArray(R.array.navigation_drawer_subtitles);
-            TypedArray mNavDrawerIcons = getResources().obtainTypedArray(R.array.navigation_drawer_icons);
-
-            for (int i = 0; i < mNavDrawerTitles.length; ++i) {
-                mNavItems.add(new NavigationListItem(mNavDrawerTitles[i], mNavDrawerSubtitles[i], mNavDrawerIcons.getResourceId(i, -1)));
-            }
-
-            mNavDrawerIcons.recycle();
-
-            mDrawerLayout = (DrawerLayout) findViewById(R.id.main_activity_drawer_layout);
-            mDrawerList = (ListView) findViewById(R.id.start_activity_left_drawer_list);
-            DrawerListAdapter adapter = new DrawerListAdapter(this, mNavItems);
-            mDrawerList.setAdapter(adapter);
-
-            mDrawerToggle = new ActionBarDrawerToggle(
-                    this,
-                    mDrawerLayout,
-                    R.string.open_drawer,
-                    R.string.close_drawer) {
-
-                @Override
-                public void onDrawerOpened(View drawerView) {
-                    super.onDrawerOpened(drawerView);
-                    supportInvalidateOptionsMenu();
-                }
-
-                @Override
-                public void onDrawerClosed(View drawerView) {
-                    super.onDrawerClosed(drawerView);
-                    supportInvalidateOptionsMenu();
-                }
-            };
-
-            mDrawerToggle.setDrawerIndicatorEnabled(true);
-            mDrawerLayout.setDrawerListener(mDrawerToggle);
-
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setHomeButtonEnabled(true);
-
-            mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    onClickNavigationDrawerItem(position);
-                }
-            });
-            mDrawerList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-                @Override
-                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                    onLongClickNavigationDrawerItem(position);
-                    return true;
-                }
-            });
+            setNavigationDrawer();
         }
     }
 
-    /**
-     * Setting onLongClick listener only to updating by city item of the NavigationDrawer
-     * We do it to open searchFragment to find and set default city for updates
-     * */
-    private void onLongClickNavigationDrawerItem(int position) {
-        switch (position){
-            case 1://City based weather
-                Toast.makeText(this, "dupadupa", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(this, SettingsActivity.class);
-                intent.putExtra(TYPE, ICON_CLICKED.SEARCH);
-                startActivity(intent);
-                break;
-            default:
-                break;
-        }
-    }
-
-    /**
-     * Handling onClickEvents for NavigationDrawer Items
-     * After clicking update method preferences are updated and the last
-     * choosen update option is default one.
-     * Other options - Comment ... Info - open another activity.
-     * */
-    private void onClickNavigationDrawerItem(int position) {
-        Intent intent = new Intent(this, SettingsActivity.class);
-        switch(position){
-            case 0: //GPS based weather
-                //TODO string + coords?
-                getSupportActionBar().setTitle("GPS");
-                mPreferenceManager.edit().putString("update_preference", "gps").apply();
-                onWeatherUpdate();
-                mDrawerLayout.closeDrawers();
-                break;
-            case 1: //City based weather
-                //TODO get city name from prefs
-                getSupportActionBar().setTitle("City");
-                mPreferenceManager.edit().putString("update_preference", "city").apply();
-                onWeatherUpdate();
-                mDrawerLayout.closeDrawers();
-                break;
-            case 2: //Comment
-                intent.putExtra(TYPE, ICON_CLICKED.COMMENT);
-                startActivity(intent);
-                break;
-            case 3: //Favourite cities
-                intent.putExtra(TYPE, ICON_CLICKED.FAVOURITES);
-                startActivity(intent);
-                break;
-            //Settings
-            case 4:
-                intent.putExtra(TYPE, ICON_CLICKED.SETTINGS);
-                startActivity(intent);
-                break;
-            //Info
-            case 5:
-                intent.putExtra(TYPE, ICON_CLICKED.INFO);
-                startActivity(intent);
-                break;
-            default:
-                Log.e(TAG, "Unexpected navigation drawer item id");
-                break;
-        }
-        /**
-         * After cliking one of available options, NavigaitonDrawer is closed.
-         * Do not refer to the long click for the Default City.
-         * */
-        mDrawerLayout.closeDrawers();
-    }
-
-    /**
-     * Overriding methods to make NavigationDrawer works as supposed:
-     * Opening when onMenu is clicked and closing when onpened and onMenu
-     * or onBack is clicked
-     * If Legend is opened - onBack closing it
-     * */
     @Override
     protected void onPostCreate(Bundle savedInstanceState){
+        /**
+         * Overriding methods to make NavigationDrawer works as supposed:
+         * Opening when onMenu is clicked and closing when onpened and onMenu
+         * or onBack is clicked
+         * If Legend is opened - onBack closing it
+         * */
         super.onPostCreate(savedInstanceState);
         mDrawerToggle.syncState();
     }
@@ -290,10 +151,179 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * Fetching and updating weather from the Internet
-     * */
-    public void onWeatherUpdate() {
+    private void setActionBarParams() {
+        getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.color.blue));
+        String updateMethod = mPreferenceManager.getString("update_preference", "gps");
+        Log.d(TAG, updateMethod);
+        if(updateMethod.equals("gps")){
+            getSupportActionBar().setTitle("GPS");
+        }
+        else {
+            //TODO get city name from prefs
+            getSupportActionBar().setTitle("City");
+        }
+    }
+
+    private Boolean isFirstLaunch(){
+        return mPreferenceManager.getBoolean("first_time_launch_preference", true);
+    }
+
+    private void startFirstLaunchActivity() {
+        Intent intent = new Intent(this, FirstLaunchActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    private void startWeatherFragment() {
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.container, new WeatherFragment(), FRAGMENT_TAG)
+                .commit();
+    }
+
+    private void setNavigationDrawer() {
+        /**
+         * Loading Titles, Subtitles and Icons to populate and set NavigationDrawer as enabled
+         */
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.main_activity_drawer_layout);
+        mDrawerList = (ListView) findViewById(R.id.start_activity_left_drawer_list);
+
+        populateNavigationDrawerItems();
+        setDrawerListAdapter();
+        mDrawerToggle = getActionBarDrawerToggle();
+        mDrawerToggle.setDrawerIndicatorEnabled(true);
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
+        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                onClickNavigationDrawerItem(position);
+            }
+        });
+
+        mDrawerList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                onLongClickNavigationDrawerItem(position);
+                return true;
+            }
+        });
+    }
+
+    private void populateNavigationDrawerItems() {
+        String[] navigationDrawerTitles = getResources().getStringArray(R.array.navigation_drawer_titles);
+        String[] navigationDrawerSubtitles = getResources().getStringArray(R.array.navigation_drawer_subtitles);
+        TypedArray navigationDrawerIcons = getResources().obtainTypedArray(R.array.navigation_drawer_icons);
+
+        for (int i = 0; i < navigationDrawerTitles.length; ++i) {
+            mNavigationDrawerItems.add(new NavigationListItem(navigationDrawerTitles[i], navigationDrawerSubtitles[i], navigationDrawerIcons.getResourceId(i, -1)));
+        }
+
+        navigationDrawerIcons.recycle();
+    }
+
+    private void setDrawerListAdapter() {
+        DrawerListAdapter adapter = new DrawerListAdapter(this, mNavigationDrawerItems);
+        mDrawerList.setAdapter(adapter);
+    }
+
+    @NonNull
+    private ActionBarDrawerToggle getActionBarDrawerToggle() {
+        return new ActionBarDrawerToggle(
+                this,
+                mDrawerLayout,
+                R.string.open_drawer,
+                R.string.close_drawer) {
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                supportInvalidateOptionsMenu();
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+                supportInvalidateOptionsMenu();
+            }
+        };
+    }
+
+    private void onClickNavigationDrawerItem(int position) {
+        /**
+         * Handling onClickEvents for NavigationDrawer Items
+         * After clicking update method preferences are updated and the last
+         * choosen update option is default one.
+         * Other options - Comment ... Info - open another activity.
+         * */
+        Intent intent = new Intent(this, SettingsActivity.class);
+        switch(position){
+            case 0: //GPS based weather
+                //TODO string + coords?
+                getSupportActionBar().setTitle("GPS");
+                mPreferenceManager.edit().putString("update_preference", "gps").apply();
+                onWeatherUpdate();
+                mDrawerLayout.closeDrawers();
+                break;
+            case 1: //City based weather
+                //TODO get city name from prefs
+                getSupportActionBar().setTitle("City");
+                mPreferenceManager.edit().putString("update_preference", "city").apply();
+                onWeatherUpdate();
+                mDrawerLayout.closeDrawers();
+                break;
+            case 2: //Comment
+                intent.putExtra(TYPE, ICON_CLICKED.COMMENT);
+                startActivity(intent);
+                break;
+            case 3: //Favourite cities
+                intent.putExtra(TYPE, ICON_CLICKED.FAVOURITES);
+                startActivity(intent);
+                break;
+            //Settings
+            case 4:
+                intent.putExtra(TYPE, ICON_CLICKED.SETTINGS);
+                startActivity(intent);
+                break;
+            //Info
+            case 5:
+                intent.putExtra(TYPE, ICON_CLICKED.INFO);
+                startActivity(intent);
+                break;
+            default:
+                Log.e(TAG, "Unexpected navigation drawer item id");
+                break;
+        }
+        /**
+         * After cliking one of available options, NavigaitonDrawer is closed.
+         * Do not refer to the long click for the Default City.
+         * */
+        mDrawerLayout.closeDrawers();
+    }
+
+    private void onLongClickNavigationDrawerItem(int position) {
+        /**
+         * Setting onLongClick listener only to updating by city item of the NavigationDrawer
+         * We do it to open searchFragment to find and set default city for updates
+         * */
+        switch (position){
+            case 1://City based weather
+                Toast.makeText(this, "dupadupa", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this, SettingsActivity.class);
+                intent.putExtra(TYPE, ICON_CLICKED.SEARCH);
+                startActivity(intent);
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void onWeatherUpdate() {
+        /**
+         * Fetching and updating weather from the Internet
+         * */
         WeatherFragment weatherFragment = (WeatherFragment) getSupportFragmentManager()
                 .findFragmentByTag(FRAGMENT_TAG);
 
@@ -301,7 +331,8 @@ public class MainActivity extends ActionBarActivity {
             weatherFragment.onUpdateWeatherFromWeb();
         }
         else {
-            Log.e(TAG, "Cannot find fragment by tag");
+            Log.d(TAG, "Cannot find fragment by tag - starting new one");
+            startWeatherFragment();
         }
     }
 }

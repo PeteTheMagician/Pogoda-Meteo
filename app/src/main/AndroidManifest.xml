@@ -19,7 +19,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".FirstStartActivity"
+            android:name=".FirstLaunchActivity"
             android:label="@string/title_activity_first_start" >
         </activity>
         <activity

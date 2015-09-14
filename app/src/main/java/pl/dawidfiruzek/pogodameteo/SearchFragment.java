@@ -31,7 +31,7 @@ public class SearchFragment extends Fragment {
         v.findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String referenceActivity = FirstStartActivity.class.getSimpleName();
+                String referenceActivity = FirstLaunchActivity.class.getSimpleName();
                 String currentActivity = getActivity().getTitle().toString();
                 // TODO delete button and replace it by choosing city - mechanism stays the same
                 if(v.getId() == R.id.button) {
