@@ -33,18 +33,27 @@ public class WeatherFragment extends Fragment implements AsyncWeatherResponse{
         View view = inflater.inflate(R.layout.fragment_weather, container, false);
         this.weatherView = (ImageView)view.findViewById(R.id.image_weather);
         this.legendView = (ImageView)view.findViewById(R.id.image_legend);
+        setLegendListenerOnPortraitOrientation();
+        downloadAndSetWeather();
+        setLegendImage();
+        
+        Log.d(MainActivity.TAG, "WeatherFragment Created");
+        return view;
+    }
 
-        //TODO is it necessary??
-//        /**
-//         * Setting Legend size
-//         * */
-//        WindowManager wm = (WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE);
-//        Display display = wm.getDefaultDisplay();
-//        int height = display.getHeight();
-//
-//        //around original proportion of the image h/w = 2.035714285714286
-        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-//            this.legendView.setMaxWidth(height / 2);
+    @Override
+    public void onPause() {
+        this.fetchWeatherTask.cancel(true);
+        super.onPause();
+    }
+
+    @Override
+    public void setDownloadedWeatherImage(Bitmap output) {
+        this.weatherView.setImageBitmap(output);
+    }
+
+    private void setLegendListenerOnPortraitOrientation() {
+        if(isOrientationPortrait()) {
             this.legendView.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
@@ -58,30 +67,19 @@ public class WeatherFragment extends Fragment implements AsyncWeatherResponse{
                 }
             });
         }
-        onUpdateWeatherFromWeb();
-        
-        Log.d(MainActivity.TAG, "WeatherFragment Created");
-        return view;
     }
 
-    @Override
-    public void onPause() {
-        this.fetchWeatherTask.cancel(true);
-        super.onPause();
+    private boolean isOrientationPortrait() {
+        return getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT;
     }
 
-    /**
-     * Fetching weather from the Web*/
-    public void onUpdateWeatherFromWeb(){
+    public void downloadAndSetWeather(){
+        Log.d(MainActivity.TAG, "Started fetching weather from web");
         this.fetchWeatherTask = new FetchWeatherTask(getActivity());
         this.fetchWeatherTask.delegate = this;
         this.fetchWeatherTask.execute();
-        setLegendImage();
-        Log.d(MainActivity.TAG, "Started fetching weather from web");
     }
-    /**
-     * Setting Legend image corresponding to choosen Update Method and Language
-     * */
+
     public void setLegendImage() {
         SharedPreferences preferenceManager = PreferenceManager.getDefaultSharedPreferences(getActivity());
         String model = preferenceManager.getString("grid_preference", "um");
@@ -111,10 +109,5 @@ public class WeatherFragment extends Fragment implements AsyncWeatherResponse{
         else{
             Log.e(MainActivity.TAG, "Unexpectec model");
         }
-    }
-
-    @Override
-    public void processFinish(Bitmap output) {
-        this.weatherView.setImageBitmap(output);
     }
 }

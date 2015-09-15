@@ -47,7 +47,7 @@ public class SynopticsCommentFragment extends Fragment implements AsyncCommentRe
     }
 
     @Override
-    public void processFinish(String output) {
+    public void setDownloadedComment(String output) {
         this.textComment.setMovementMethod(LinkMovementMethod.getInstance());
         this.textComment.setText(Html.fromHtml(output));
     }

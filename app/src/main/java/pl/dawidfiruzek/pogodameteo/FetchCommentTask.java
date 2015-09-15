@@ -45,6 +45,6 @@ public class FetchCommentTask extends AsyncTask <Void, Void, String> {
 
     @Override
     protected void onPostExecute(String result) {
-        delegate.processFinish(result);
+        delegate.setDownloadedComment(result);
     }
 }

@@ -122,6 +122,7 @@ public class MainActivity extends ActionBarActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_refresh){
             updateWeather();
+            setActionBarTitle();
             return true;
         }
         if (id == R.id.action_search_city) {
@@ -332,7 +333,7 @@ public class MainActivity extends ActionBarActivity {
                 .findFragmentByTag(FRAGMENT_TAG);
 
         if(weatherFragment != null){
-            weatherFragment.onUpdateWeatherFromWeb();
+            weatherFragment.downloadAndSetWeather();
         }
         else {
             Log.d(TAG, "Cannot find fragment by tag - starting new one");
