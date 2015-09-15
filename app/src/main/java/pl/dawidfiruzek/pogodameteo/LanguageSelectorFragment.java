@@ -15,9 +15,9 @@ import android.widget.Toast;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class LanguageFragment extends Fragment implements View.OnClickListener {
+public class LanguageSelectorFragment extends Fragment implements View.OnClickListener {
 
-    public LanguageFragment() {
+    public LanguageSelectorFragment() {
         // Required empty public constructor
     }
 
@@ -26,7 +26,7 @@ public class LanguageFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_language, container, false);
+        View v = inflater.inflate(R.layout.fragment_language_selector, container, false);
 
         v.findViewById(R.id.button_polish).setOnClickListener(this);
         v.findViewById(R.id.button_english).setOnClickListener(this);

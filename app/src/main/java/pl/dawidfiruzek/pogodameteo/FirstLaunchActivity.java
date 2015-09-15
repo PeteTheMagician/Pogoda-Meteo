@@ -12,7 +12,7 @@ public class FirstLaunchActivity extends ActionBarActivity {
         setContentView(R.layout.activity_first_start);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.first_start_container, new LanguageFragment())
+                    .add(R.id.first_start_container, new LanguageSelectorFragment())
                     .commit();
         }
 

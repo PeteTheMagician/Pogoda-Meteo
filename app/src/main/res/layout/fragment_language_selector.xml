@@ -3,22 +3,22 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="pl.dawidfiruzek.pogodameteo.UpdateMethodFragment">
+    tools:context="pl.dawidfiruzek.pogodameteo.LanguageSelectorFragment">
 
     <Button
-        android:id="@+id/button_use_gps"
+        android:id="@+id/button_polish"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:background="@color/green"
-        android:text="Use GPS location"/>
+        android:text="Polski"/>
 
     <Button
-        android:id="@+id/button_use_city"
+        android:id="@+id/button_english"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:background="@color/red"
-        android:text="Choose city from list"/>
+        android:text="English"/>
 
 </LinearLayout>

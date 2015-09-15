@@ -15,10 +15,10 @@ import android.view.ViewGroup;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class UpdateMethodFragment extends Fragment implements View.OnClickListener {
+public class UpdateMethodSelectorFragment extends Fragment implements View.OnClickListener {
 
 
-    public UpdateMethodFragment() {
+    public UpdateMethodSelectorFragment() {
         // Required empty public constructor
     }
 
@@ -27,7 +27,7 @@ public class UpdateMethodFragment extends Fragment implements View.OnClickListen
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_update_method, container, false);
+        View v = inflater.inflate(R.layout.fragment_update_method_selector, container, false);
 
         v.findViewById(R.id.button_use_gps).setOnClickListener(this);
         v.findViewById(R.id.button_use_city).setOnClickListener(this);
