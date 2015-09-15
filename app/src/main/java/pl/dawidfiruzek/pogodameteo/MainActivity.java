@@ -53,7 +53,7 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         this.preferenceManager = PreferenceManager.getDefaultSharedPreferences(this);
         setActionBarTitle();
-        setActionBarColor();
+        setActionBarBlueColor();
 
         if(isFirstLaunch()){
             startFirstLaunchActivity();
@@ -162,7 +162,7 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
-    private void setActionBarColor() {
+    private void setActionBarBlueColor() {
         getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.color.blue));
     }
 
