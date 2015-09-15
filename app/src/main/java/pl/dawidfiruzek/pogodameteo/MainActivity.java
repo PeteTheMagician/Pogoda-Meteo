@@ -27,16 +27,12 @@ public class MainActivity extends ActionBarActivity {
     public static final String TAG = "Pogoda Meteo";
     public static final String TYPE = "FRAGMENT_TYPE";
     public static final String FRAGMENT_TAG = "WEATHER_FRAGMENT_TAG";
-    public enum ICON_CLICKED {
-        GPS,
-        CITY,
+    public enum FRAGMENT_TYPE {
         COMMENT,
         FAVOURITES,
         SETTINGS,
         INFO,
-        REFRESH,
-        SEARCH,
-        LEGEND;
+        SEARCH
     }
     private SharedPreferences preferenceManager;
     private ListView drawerList;
@@ -56,7 +52,8 @@ public class MainActivity extends ActionBarActivity {
          */
         super.onCreate(savedInstanceState);
         this.preferenceManager = PreferenceManager.getDefaultSharedPreferences(this);
-        setActionBarParams();
+        setActionBarTitle();
+        setActionBarColor();
 
         if(isFirstLaunch()){
             startFirstLaunchActivity();
@@ -71,14 +68,14 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
+    /**
+     * Overriding methods to make NavigationDrawer works as supposed:
+     * Opening when onMenu is clicked and closing when onpened and onMenu
+     * or onBack is clicked
+     * If Legend is opened - onBack closing it
+     * */
     @Override
     protected void onPostCreate(Bundle savedInstanceState){
-        /**
-         * Overriding methods to make NavigationDrawer works as supposed:
-         * Opening when onMenu is clicked and closing when onpened and onMenu
-         * or onBack is clicked
-         * If Legend is opened - onBack closing it
-         * */
         super.onPostCreate(savedInstanceState);
         this.drawerToggle.syncState();
     }
@@ -89,10 +86,14 @@ public class MainActivity extends ActionBarActivity {
         if(this.drawerLayout.isDrawerOpen(this.drawerList)){
             this.drawerLayout.closeDrawers();
         }
-        else if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT && legendView.getVisibility() == View.VISIBLE){
+        else if(isLegendToHide(legendView)){
             legendView.setVisibility(View.INVISIBLE);
         }
         else super.onBackPressed();
+    }
+
+    private boolean isLegendToHide(ImageView legendView) {
+        return getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT && legendView.getVisibility() == View.VISIBLE;
     }
 
     @Override
@@ -120,29 +121,19 @@ public class MainActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_refresh){
-            onWeatherUpdate();
+            updateWeather();
             return true;
         }
         if (id == R.id.action_search_city) {
-            Intent intent = new Intent(this, SettingsActivity.class);
-            intent.putExtra(TYPE, ICON_CLICKED.SEARCH);
-            startActivity(intent);
+            startDetailedActivityWithSearchFragment();
             this.drawerLayout.closeDrawers();
             return true;
         }
-
         if(id == R.id.action_show_legend){
-            ImageView legendView = (ImageView) findViewById(R.id.image_legend);
-
-            if(legendView.getVisibility() == View.INVISIBLE) {
-                legendView.setVisibility(View.VISIBLE);
-            }
-            else legendView.setVisibility(View.INVISIBLE);
-
+            handleLegendVisibility();
             this.drawerLayout.closeDrawers();
             return true;
         }
-
         // Activate navigation drawer toggle
         if(this.drawerToggle.onOptionsItemSelected(item)){
             return true;
@@ -151,8 +142,15 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void setActionBarParams() {
-        getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.color.blue));
+    private void handleLegendVisibility() {
+        ImageView legendView = (ImageView) findViewById(R.id.image_legend);
+        if(legendView.getVisibility() == View.INVISIBLE) {
+            legendView.setVisibility(View.VISIBLE);
+        }
+        else legendView.setVisibility(View.INVISIBLE);
+    }
+
+    private void setActionBarTitle() {
         String updateMethod = this.preferenceManager.getString("update_preference", "gps");
         Log.d(TAG, updateMethod);
         if(updateMethod.equals("gps")){
@@ -162,6 +160,10 @@ public class MainActivity extends ActionBarActivity {
             //TODO get city name from prefs
             getSupportActionBar().setTitle("City");
         }
+    }
+
+    private void setActionBarColor() {
+        getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.color.blue));
     }
 
     private Boolean isFirstLaunch(){
@@ -193,8 +195,7 @@ public class MainActivity extends ActionBarActivity {
         this.drawerToggle.setDrawerIndicatorEnabled(true);
         this.drawerLayout.setDrawerListener(this.drawerToggle);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
+        setHomeButtonForNavigationDrawer();
 
         this.drawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -229,6 +230,11 @@ public class MainActivity extends ActionBarActivity {
         this.drawerList.setAdapter(adapter);
     }
 
+    private void setHomeButtonForNavigationDrawer() {
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
     @NonNull
     private ActionBarDrawerToggle getActionBarDrawerToggle() {
         return new ActionBarDrawerToggle(
@@ -258,72 +264,70 @@ public class MainActivity extends ActionBarActivity {
          * choosen update option is default one.
          * Other options - Comment ... Info - open another activity.
          * */
-        Intent intent = new Intent(this, SettingsActivity.class);
         switch(position){
             case 0: //GPS based weather
                 //TODO string + coords?
-                getSupportActionBar().setTitle("GPS");
-                this.preferenceManager.edit().putString("update_preference", "gps").apply();
-                onWeatherUpdate();
-                this.drawerLayout.closeDrawers();
+                setUpdateMethod("gps");
+                setActionBarTitle();
+                updateWeather();
                 break;
             case 1: //City based weather
                 //TODO get city name from prefs
-                getSupportActionBar().setTitle("City");
-                this.preferenceManager.edit().putString("update_preference", "city").apply();
-                onWeatherUpdate();
-                this.drawerLayout.closeDrawers();
+                setUpdateMethod("city");
+                setActionBarTitle();
+                updateWeather();
                 break;
             case 2: //Comment
-                intent.putExtra(TYPE, ICON_CLICKED.COMMENT);
-                startActivity(intent);
+                startDetailedActivityWithCustomFragment(FRAGMENT_TYPE.COMMENT);
                 break;
             case 3: //Favourite cities
-                intent.putExtra(TYPE, ICON_CLICKED.FAVOURITES);
-                startActivity(intent);
+                startDetailedActivityWithCustomFragment(FRAGMENT_TYPE.FAVOURITES);
                 break;
-            //Settings
-            case 4:
-                intent.putExtra(TYPE, ICON_CLICKED.SETTINGS);
-                startActivity(intent);
+            case 4: //Settings
+                startDetailedActivityWithCustomFragment(FRAGMENT_TYPE.SETTINGS);
                 break;
-            //Info
-            case 5:
-                intent.putExtra(TYPE, ICON_CLICKED.INFO);
-                startActivity(intent);
+            case 5: //Info
+                startDetailedActivityWithCustomFragment(FRAGMENT_TYPE.INFO);
                 break;
             default:
                 Log.e(TAG, "Unexpected navigation drawer item id");
                 break;
         }
-        /**
-         * After cliking one of available options, NavigaitonDrawer is closed.
-         * Do not refer to the long click for the Default City.
-         * */
         this.drawerLayout.closeDrawers();
+    }
+
+    private void setUpdateMethod(String field) {
+        this.preferenceManager.edit().putString("update_preference", field).apply();
+    }
+
+    private void startDetailedActivityWithCustomFragment(FRAGMENT_TYPE fragmentType){
+        Intent intent = new Intent(this, DetailedActivity.class);
+        intent.putExtra(TYPE, fragmentType);
+        startActivity(intent);
     }
 
     private void onLongClickNavigationDrawerItem(int position) {
         /**
-         * Setting onLongClick listener only to updating by city item of the NavigationDrawer
+         * Setting onLongClick listener only to updating by city
          * We do it to open searchFragment to find and set default city for updates
          * */
         switch (position){
             case 1://City based weather
                 Toast.makeText(this, "dupadupa", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(this, SettingsActivity.class);
-                intent.putExtra(TYPE, ICON_CLICKED.SEARCH);
-                startActivity(intent);
+                startDetailedActivityWithSearchFragment();
                 break;
             default:
                 break;
         }
     }
 
-    private void onWeatherUpdate() {
-        /**
-         * Fetching and updating weather from the Internet
-         * */
+    private void startDetailedActivityWithSearchFragment() {
+        Intent intent = new Intent(this, DetailedActivity.class);
+        intent.putExtra(TYPE, FRAGMENT_TYPE.SEARCH);
+        startActivity(intent);
+    }
+
+    private void updateWeather() {
         WeatherFragment weatherFragment = (WeatherFragment) getSupportFragmentManager()
                 .findFragmentByTag(FRAGMENT_TAG);
 
