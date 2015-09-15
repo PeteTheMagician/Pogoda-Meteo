@@ -17,8 +17,8 @@ import android.widget.Toast;
  */
 public class SynopticsCommentFragment extends Fragment implements AsyncCommentResponse{
 
-    private FetchCommentTask mFetchCommentTask;
-    private TextView mTextComment;
+    private FetchCommentTask fetchCommentTask;
+    private TextView textComment;
 
     public SynopticsCommentFragment() {
         // Required empty public constructor
@@ -27,7 +27,7 @@ public class SynopticsCommentFragment extends Fragment implements AsyncCommentRe
 
     @Override
     public void onPause() {
-        mFetchCommentTask.cancel(true);
+        this.fetchCommentTask.cancel(true);
         super.onPause();
     }
 
@@ -36,11 +36,11 @@ public class SynopticsCommentFragment extends Fragment implements AsyncCommentRe
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_synoptics_comment, container, false);
-        mTextComment = (TextView) v.findViewById(R.id.text_comment);
+        this.textComment = (TextView) v.findViewById(R.id.text_comment);
 
-        mFetchCommentTask = new FetchCommentTask();
-        mFetchCommentTask.delegate = this;
-        mFetchCommentTask.execute();
+        this.fetchCommentTask = new FetchCommentTask();
+        this.fetchCommentTask.delegate = this;
+        this.fetchCommentTask.execute();
         Toast.makeText(getActivity(), "Comment", Toast.LENGTH_LONG).show();
 
         return v;
@@ -48,7 +48,7 @@ public class SynopticsCommentFragment extends Fragment implements AsyncCommentRe
 
     @Override
     public void processFinish(String output) {
-        mTextComment.setMovementMethod(LinkMovementMethod.getInstance());
-        mTextComment.setText(Html.fromHtml(output));
+        this.textComment.setMovementMethod(LinkMovementMethod.getInstance());
+        this.textComment.setText(Html.fromHtml(output));
     }
 }

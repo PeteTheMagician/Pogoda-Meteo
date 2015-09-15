@@ -38,11 +38,11 @@ public class MainActivity extends ActionBarActivity {
         SEARCH,
         LEGEND;
     }
-    private SharedPreferences mPreferenceManager;
-    private ListView mDrawerList;
-    private DrawerLayout mDrawerLayout;
-    private ActionBarDrawerToggle mDrawerToggle;
-    private ArrayList<NavigationListItem> mNavigationDrawerItems = new ArrayList<NavigationListItem>();
+    private SharedPreferences preferenceManager;
+    private ListView drawerList;
+    private DrawerLayout drawerLayout;
+    private ActionBarDrawerToggle drawerToggle;
+    private ArrayList<NavigationListItem> navigationDrawerItems = new ArrayList<NavigationListItem>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +55,7 @@ public class MainActivity extends ActionBarActivity {
          * will be loaded.
          */
         super.onCreate(savedInstanceState);
-        mPreferenceManager = PreferenceManager.getDefaultSharedPreferences(this);
+        this.preferenceManager = PreferenceManager.getDefaultSharedPreferences(this);
         setActionBarParams();
 
         if(isFirstLaunch()){
@@ -80,14 +80,14 @@ public class MainActivity extends ActionBarActivity {
          * If Legend is opened - onBack closing it
          * */
         super.onPostCreate(savedInstanceState);
-        mDrawerToggle.syncState();
+        this.drawerToggle.syncState();
     }
 
     @Override
     public void onBackPressed() {
         ImageView legendView = (ImageView) findViewById(R.id.image_legend);
-        if(mDrawerLayout.isDrawerOpen(mDrawerList)){
-            mDrawerLayout.closeDrawers();
+        if(this.drawerLayout.isDrawerOpen(this.drawerList)){
+            this.drawerLayout.closeDrawers();
         }
         else if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT && legendView.getVisibility() == View.VISIBLE){
             legendView.setVisibility(View.INVISIBLE);
@@ -97,10 +97,10 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     public boolean onMenuOpened(int featureId, Menu menu) {
-        if(! mDrawerLayout.isDrawerOpen(mDrawerList)){
-            mDrawerLayout.openDrawer(mDrawerList);
+        if(! this.drawerLayout.isDrawerOpen(this.drawerList)){
+            this.drawerLayout.openDrawer(this.drawerList);
         }
-        else mDrawerLayout.closeDrawers();
+        else this.drawerLayout.closeDrawers();
         return super.onMenuOpened(featureId, menu);
     }
 
@@ -127,7 +127,7 @@ public class MainActivity extends ActionBarActivity {
             Intent intent = new Intent(this, SettingsActivity.class);
             intent.putExtra(TYPE, ICON_CLICKED.SEARCH);
             startActivity(intent);
-            mDrawerLayout.closeDrawers();
+            this.drawerLayout.closeDrawers();
             return true;
         }
 
@@ -139,12 +139,12 @@ public class MainActivity extends ActionBarActivity {
             }
             else legendView.setVisibility(View.INVISIBLE);
 
-            mDrawerLayout.closeDrawers();
+            this.drawerLayout.closeDrawers();
             return true;
         }
 
         // Activate navigation drawer toggle
-        if(mDrawerToggle.onOptionsItemSelected(item)){
+        if(this.drawerToggle.onOptionsItemSelected(item)){
             return true;
         }
 
@@ -153,7 +153,7 @@ public class MainActivity extends ActionBarActivity {
 
     private void setActionBarParams() {
         getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.color.blue));
-        String updateMethod = mPreferenceManager.getString("update_preference", "gps");
+        String updateMethod = this.preferenceManager.getString("update_preference", "gps");
         Log.d(TAG, updateMethod);
         if(updateMethod.equals("gps")){
             getSupportActionBar().setTitle("GPS");
@@ -165,7 +165,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private Boolean isFirstLaunch(){
-        return mPreferenceManager.getBoolean("first_time_launch_preference", true);
+        return this.preferenceManager.getBoolean("first_time_launch_preference", true);
     }
 
     private void startFirstLaunchActivity() {
@@ -184,26 +184,26 @@ public class MainActivity extends ActionBarActivity {
         /**
          * Loading Titles, Subtitles and Icons to populate and set NavigationDrawer as enabled
          */
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.main_activity_drawer_layout);
-        mDrawerList = (ListView) findViewById(R.id.start_activity_left_drawer_list);
+        this.drawerLayout = (DrawerLayout) findViewById(R.id.main_activity_drawer_layout);
+        this.drawerList = (ListView) findViewById(R.id.start_activity_left_drawer_list);
 
         populateNavigationDrawerItems();
         setDrawerListAdapter();
-        mDrawerToggle = getActionBarDrawerToggle();
-        mDrawerToggle.setDrawerIndicatorEnabled(true);
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
+        this.drawerToggle = getActionBarDrawerToggle();
+        this.drawerToggle.setDrawerIndicatorEnabled(true);
+        this.drawerLayout.setDrawerListener(this.drawerToggle);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        this.drawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 onClickNavigationDrawerItem(position);
             }
         });
 
-        mDrawerList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        this.drawerList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 onLongClickNavigationDrawerItem(position);
@@ -218,22 +218,22 @@ public class MainActivity extends ActionBarActivity {
         TypedArray navigationDrawerIcons = getResources().obtainTypedArray(R.array.navigation_drawer_icons);
 
         for (int i = 0; i < navigationDrawerTitles.length; ++i) {
-            mNavigationDrawerItems.add(new NavigationListItem(navigationDrawerTitles[i], navigationDrawerSubtitles[i], navigationDrawerIcons.getResourceId(i, -1)));
+            this.navigationDrawerItems.add(new NavigationListItem(navigationDrawerTitles[i], navigationDrawerSubtitles[i], navigationDrawerIcons.getResourceId(i, -1)));
         }
 
         navigationDrawerIcons.recycle();
     }
 
     private void setDrawerListAdapter() {
-        DrawerListAdapter adapter = new DrawerListAdapter(this, mNavigationDrawerItems);
-        mDrawerList.setAdapter(adapter);
+        DrawerListAdapter adapter = new DrawerListAdapter(this, this.navigationDrawerItems);
+        this.drawerList.setAdapter(adapter);
     }
 
     @NonNull
     private ActionBarDrawerToggle getActionBarDrawerToggle() {
         return new ActionBarDrawerToggle(
                 this,
-                mDrawerLayout,
+                this.drawerLayout,
                 R.string.open_drawer,
                 R.string.close_drawer) {
 
@@ -263,16 +263,16 @@ public class MainActivity extends ActionBarActivity {
             case 0: //GPS based weather
                 //TODO string + coords?
                 getSupportActionBar().setTitle("GPS");
-                mPreferenceManager.edit().putString("update_preference", "gps").apply();
+                this.preferenceManager.edit().putString("update_preference", "gps").apply();
                 onWeatherUpdate();
-                mDrawerLayout.closeDrawers();
+                this.drawerLayout.closeDrawers();
                 break;
             case 1: //City based weather
                 //TODO get city name from prefs
                 getSupportActionBar().setTitle("City");
-                mPreferenceManager.edit().putString("update_preference", "city").apply();
+                this.preferenceManager.edit().putString("update_preference", "city").apply();
                 onWeatherUpdate();
-                mDrawerLayout.closeDrawers();
+                this.drawerLayout.closeDrawers();
                 break;
             case 2: //Comment
                 intent.putExtra(TYPE, ICON_CLICKED.COMMENT);
@@ -300,7 +300,7 @@ public class MainActivity extends ActionBarActivity {
          * After cliking one of available options, NavigaitonDrawer is closed.
          * Do not refer to the long click for the Default City.
          * */
-        mDrawerLayout.closeDrawers();
+        this.drawerLayout.closeDrawers();
     }
 
     private void onLongClickNavigationDrawerItem(int position) {

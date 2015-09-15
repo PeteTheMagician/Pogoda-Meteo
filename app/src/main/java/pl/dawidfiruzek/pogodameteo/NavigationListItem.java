@@ -4,25 +4,25 @@ package pl.dawidfiruzek.pogodameteo;
  * Created by fks on 2015-05-19.
  */
 public class NavigationListItem {
-    private String mTitle;
-    private String mSubtitle;
-    private int mIcon;
+    private String title;
+    private String subtitle;
+    private int icon;
 
     public NavigationListItem(String title, String subtitle, int icon){
-        mTitle = title;
-        mSubtitle = subtitle;
-        mIcon = icon;
+        this.title = title;
+        this.subtitle = subtitle;
+        this.icon = icon;
     }
 
     public String getSubtitle() {
-        return mSubtitle;
+        return this.subtitle;
     }
 
     public String getTitle() {
-        return mTitle;
+        return this.title;
     }
 
     public int getIcon() {
-        return mIcon;
+        return this.icon;
     }
 }

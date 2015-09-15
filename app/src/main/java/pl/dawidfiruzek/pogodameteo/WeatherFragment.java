@@ -19,9 +19,9 @@ import android.widget.ImageView;
  */
 public class WeatherFragment extends Fragment implements AsyncWeatherResponse{
 
-    FetchWeatherTask mFetchWeatherTask;
-    ImageView mWeatherView;
-    ImageView mLegendView;
+    FetchWeatherTask fetchWeatherTask;
+    ImageView weatherView;
+    ImageView legendView;
 
     public WeatherFragment() {
     }
@@ -31,8 +31,8 @@ public class WeatherFragment extends Fragment implements AsyncWeatherResponse{
                              Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         View view = inflater.inflate(R.layout.fragment_weather, container, false);
-        mWeatherView = (ImageView)view.findViewById(R.id.image_weather);
-        mLegendView = (ImageView)view.findViewById(R.id.image_legend);
+        this.weatherView = (ImageView)view.findViewById(R.id.image_weather);
+        this.legendView = (ImageView)view.findViewById(R.id.image_legend);
 
         //TODO is it necessary??
 //        /**
@@ -44,14 +44,15 @@ public class WeatherFragment extends Fragment implements AsyncWeatherResponse{
 //
 //        //around original proportion of the image h/w = 2.035714285714286
         if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-//            mLegendView.setMaxWidth(height / 2);
-            mLegendView.setOnTouchListener(new View.OnTouchListener() {
+//            this.legendView.setMaxWidth(height / 2);
+            this.legendView.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
                     int action = event.getActionMasked();
                     //TODO make legend invisible on swipe
                     if(action == MotionEvent.ACTION_MOVE){
-                        mLegendView.setVisibility(View.INVISIBLE);
+                        //TODO refractor code to call legend by this.legendView
+                        legendView.setVisibility(View.INVISIBLE);
                     }
                     return true;
                 }
@@ -65,16 +66,16 @@ public class WeatherFragment extends Fragment implements AsyncWeatherResponse{
 
     @Override
     public void onPause() {
-        mFetchWeatherTask.cancel(true);
+        this.fetchWeatherTask.cancel(true);
         super.onPause();
     }
 
     /**
      * Fetching weather from the Web*/
     public void onUpdateWeatherFromWeb(){
-        mFetchWeatherTask = new FetchWeatherTask(getActivity());
-        mFetchWeatherTask.delegate = this;
-        mFetchWeatherTask.execute();
+        this.fetchWeatherTask = new FetchWeatherTask(getActivity());
+        this.fetchWeatherTask.delegate = this;
+        this.fetchWeatherTask.execute();
         setLegendImage();
         Log.d(MainActivity.TAG, "Started fetching weather from web");
     }
@@ -87,10 +88,10 @@ public class WeatherFragment extends Fragment implements AsyncWeatherResponse{
         String language = preferenceManager.getString("language_preference", "pl");
         if(language.equals("pl")){
             if(model.equals("um")){
-                mLegendView.setImageResource(R.drawable.leg60_pl);
+                this.legendView.setImageResource(R.drawable.leg60_pl);
             }
             else if(model.equals("coamps")){
-                mLegendView.setImageResource(R.drawable.leg84_pl);
+                this.legendView.setImageResource(R.drawable.leg84_pl);
             }
             else {
                 Log.e(MainActivity.TAG, "Unexpectec model for Polish language");
@@ -98,10 +99,10 @@ public class WeatherFragment extends Fragment implements AsyncWeatherResponse{
         }
         else if(language.equals("en")){
             if(model.equals("um")){
-                mLegendView.setImageResource(R.drawable.leg60_en);
+                this.legendView.setImageResource(R.drawable.leg60_en);
             }
             else if(model.equals("coamps")){
-                mLegendView.setImageResource(R.drawable.leg84_en);
+                this.legendView.setImageResource(R.drawable.leg84_en);
             }
             else {
                 Log.e(MainActivity.TAG, "Unexpectec model for English language");
@@ -114,6 +115,6 @@ public class WeatherFragment extends Fragment implements AsyncWeatherResponse{
 
     @Override
     public void processFinish(Bitmap output) {
-        mWeatherView.setImageBitmap(output);
+        this.weatherView.setImageBitmap(output);
     }
 }
