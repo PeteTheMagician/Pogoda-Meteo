@@ -52,7 +52,7 @@ public class UpdateMethodFragment extends Fragment implements View.OnClickListen
                 editor.putString("update_preference", "city");
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .setCustomAnimations(R.anim.abc_fade_in, R.anim.abc_fade_out, R.anim.abc_fade_in, R.anim.abc_fade_out)
-                        .replace(R.id.firststartcontainer, new SearchFragment())
+                        .replace(R.id.first_start_container, new SearchFragment())
                         .addToBackStack(null)
                         .commit();
                 break;

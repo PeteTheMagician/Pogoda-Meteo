@@ -51,7 +51,7 @@ public class MainActivity extends ActionBarActivity {
          * We set there default language, default grid, default update method and
          * if update by city is selected user choose that city.
          * We can change those settings later in the Settings.
-         * In case of any further runs MainActivity will be run and WeatherFragment
+         * In case of any further runs, MainActivity will be run and WeatherFragment
          * will be loaded.
          */
         super.onCreate(savedInstanceState);
