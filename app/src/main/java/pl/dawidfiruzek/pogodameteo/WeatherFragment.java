@@ -41,17 +41,6 @@ public class WeatherFragment extends Fragment implements AsyncWeatherResponse{
         return view;
     }
 
-    @Override
-    public void onPause() {
-        this.fetchWeatherTask.cancel(true);
-        super.onPause();
-    }
-
-    @Override
-    public void setDownloadedWeatherImage(Bitmap output) {
-        this.weatherView.setImageBitmap(output);
-    }
-
     private void setLegendListenerOnPortraitOrientation() {
         if(isOrientationPortrait()) {
             this.legendView.setOnTouchListener(new View.OnTouchListener() {
@@ -109,5 +98,16 @@ public class WeatherFragment extends Fragment implements AsyncWeatherResponse{
         else{
             Log.e(MainActivity.TAG, "Unexpectec model");
         }
+    }
+
+    @Override
+    public void onPause() {
+        this.fetchWeatherTask.cancel(true);
+        super.onPause();
+    }
+
+    @Override
+    public void setDownloadedWeatherImage(Bitmap output) {
+        this.weatherView.setImageBitmap(output);
     }
 }

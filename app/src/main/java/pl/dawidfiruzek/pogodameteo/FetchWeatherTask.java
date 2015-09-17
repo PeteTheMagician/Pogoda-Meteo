@@ -42,6 +42,22 @@ public class FetchWeatherTask extends AsyncTask<Void, Void, Bitmap> {
         setAndShowProgressCircle();
     }
 
+    private void getSharedPreferences() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this.content);
+        this.gridModel = sharedPreferences.getString("grid_preference", "um");
+        this.language = sharedPreferences.getString("language_preference", "pl");
+        this.updateMethod = sharedPreferences.getString("update_preference", "GPS");
+        this.defaultCity = sharedPreferences.getString("city_preference", "462");
+    }
+
+    private void setAndShowProgressCircle() {
+        this.progressCircle = new ProgressDialog(this.content);
+        //TODO to string
+        this.progressCircle.setMessage("Downloading weather");
+        this.progressCircle.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        this.progressCircle.show();
+    }
+
     @Override
     protected Bitmap doInBackground(Void... params) {
         Bitmap meteogramImage = null;
@@ -58,28 +74,6 @@ public class FetchWeatherTask extends AsyncTask<Void, Void, Bitmap> {
         }
 
         return meteogramImage;
-    }
-
-    @Override
-    protected void onPostExecute(Bitmap result) {
-        this.progressCircle.dismiss();
-        delegate.setDownloadedWeatherImage(result);
-    }
-
-    private void getSharedPreferences() {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this.content);
-        this.gridModel = sharedPreferences.getString("grid_preference", "um");
-        this.language = sharedPreferences.getString("language_preference", "pl");
-        this.updateMethod = sharedPreferences.getString("update_preference", "GPS");
-        this.defaultCity = sharedPreferences.getString("city_preference", "462");
-    }
-
-    private void setAndShowProgressCircle() {
-        this.progressCircle = new ProgressDialog(this.content);
-        //TODO to string
-        this.progressCircle.setMessage("Downloading weather");
-        this.progressCircle.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        this.progressCircle.show();
     }
 
     private void buildWeatherUri(Uri.Builder weatherUri) {
@@ -196,5 +190,11 @@ public class FetchWeatherTask extends AsyncTask<Void, Void, Bitmap> {
         bis.close();
         is.close();
         return weatherImage;
+    }
+
+    @Override
+    protected void onPostExecute(Bitmap result) {
+        this.progressCircle.dismiss();
+        delegate.setDownloadedWeatherImage(result);
     }
 }
