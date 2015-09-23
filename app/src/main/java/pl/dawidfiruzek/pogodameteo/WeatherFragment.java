@@ -36,30 +36,20 @@ public class WeatherFragment extends Fragment implements AsyncWeatherResponse{
         setLegendListenerOnPortraitOrientation();
         downloadAndSetWeather();
         setLegendImage();
-        
+
         Log.d(MainActivity.TAG, "WeatherFragment Created");
         return view;
     }
 
-    private void setLegendListenerOnPortraitOrientation() {
-        if(isOrientationPortrait()) {
-            this.legendView.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    int action = event.getActionMasked();
-                    //TODO make legend invisible on swipe
-                    if(action == MotionEvent.ACTION_MOVE){
-                        //TODO refractor code to call legend by this.legendView
-                        legendView.setVisibility(View.INVISIBLE);
-                    }
-                    return true;
-                }
-            });
-        }
+    @Override
+    public void onPause() {
+        this.fetchWeatherTask.cancel(true);
+        super.onPause();
     }
 
-    private boolean isOrientationPortrait() {
-        return getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT;
+    @Override
+    public void setDownloadedWeatherImage(Bitmap output) {
+        this.weatherView.setImageBitmap(output);
     }
 
     public void downloadAndSetWeather(){
@@ -100,14 +90,24 @@ public class WeatherFragment extends Fragment implements AsyncWeatherResponse{
         }
     }
 
-    @Override
-    public void onPause() {
-        this.fetchWeatherTask.cancel(true);
-        super.onPause();
+    private void setLegendListenerOnPortraitOrientation() {
+        if(isOrientationPortrait()) {
+            this.legendView.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    int action = event.getActionMasked();
+                    //TODO make legend invisible on swipe
+                    if(action == MotionEvent.ACTION_MOVE){
+                        //TODO refractor code to call legend by this.legendView
+                        legendView.setVisibility(View.INVISIBLE);
+                    }
+                    return true;
+                }
+            });
+        }
     }
 
-    @Override
-    public void setDownloadedWeatherImage(Bitmap output) {
-        this.weatherView.setImageBitmap(output);
+    private boolean isOrientationPortrait() {
+        return getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT;
     }
 }

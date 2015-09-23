@@ -69,6 +69,77 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
+    /**
+     * Overriding methods to make NavigationDrawer works as supposed:
+     * Opening when onMenu is clicked and closing when onpened and onMenu
+     * or onBack is clicked
+     * If Legend is opened - onBack closing it
+     * */
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState){
+        super.onPostCreate(savedInstanceState);
+        this.drawerToggle.syncState();
+    }
+
+    @Override
+    public void onBackPressed() {
+        ImageView legendView = (ImageView) findViewById(R.id.image_legend);
+        if(this.drawerLayout.isDrawerOpen(this.drawerList)){
+            this.drawerLayout.closeDrawers();
+        }
+        else if(isLegendToHide(legendView)){
+            legendView.setVisibility(View.INVISIBLE);
+        }
+        else super.onBackPressed();
+    }
+
+    @Override
+    public boolean onMenuOpened(int featureId, Menu menu) {
+        if(! this.drawerLayout.isDrawerOpen(this.drawerList)){
+            this.drawerLayout.openDrawer(this.drawerList);
+        }
+        else this.drawerLayout.closeDrawers();
+        return super.onMenuOpened(featureId, menu);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_refresh){
+            updateWeather();
+            setActionBarTitle();
+            return true;
+        }
+        if (id == R.id.action_search_city) {
+            startDetailedActivityWithCustomFragment(FRAGMENT_TYPE.SEARCH);
+            this.drawerLayout.closeDrawers();
+            return true;
+        }
+        if(id == R.id.action_show_legend){
+            handleLegendVisibility();
+            this.drawerLayout.closeDrawers();
+            return true;
+        }
+        // Activate navigation drawer toggle
+        if(this.drawerToggle.onOptionsItemSelected(item)){
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
     private void setActionBarTitle() {
         String updateMethod = this.preferenceManager.getString("update_preference", "gps");
         Log.d(TAG, updateMethod);
@@ -253,79 +324,8 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
-    /**
-     * Overriding methods to make NavigationDrawer works as supposed:
-     * Opening when onMenu is clicked and closing when onpened and onMenu
-     * or onBack is clicked
-     * If Legend is opened - onBack closing it
-     * */
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState){
-        super.onPostCreate(savedInstanceState);
-        this.drawerToggle.syncState();
-    }
-
-    @Override
-    public void onBackPressed() {
-        ImageView legendView = (ImageView) findViewById(R.id.image_legend);
-        if(this.drawerLayout.isDrawerOpen(this.drawerList)){
-            this.drawerLayout.closeDrawers();
-        }
-        else if(isLegendToHide(legendView)){
-            legendView.setVisibility(View.INVISIBLE);
-        }
-        else super.onBackPressed();
-    }
-
     private boolean isLegendToHide(ImageView legendView) {
         return getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT && legendView.getVisibility() == View.VISIBLE;
-    }
-
-    @Override
-    public boolean onMenuOpened(int featureId, Menu menu) {
-        if(! this.drawerLayout.isDrawerOpen(this.drawerList)){
-            this.drawerLayout.openDrawer(this.drawerList);
-        }
-        else this.drawerLayout.closeDrawers();
-        return super.onMenuOpened(featureId, menu);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_refresh){
-            updateWeather();
-            setActionBarTitle();
-            return true;
-        }
-        if (id == R.id.action_search_city) {
-            startDetailedActivityWithCustomFragment(FRAGMENT_TYPE.SEARCH);
-            this.drawerLayout.closeDrawers();
-            return true;
-        }
-        if(id == R.id.action_show_legend){
-            handleLegendVisibility();
-            this.drawerLayout.closeDrawers();
-            return true;
-        }
-        // Activate navigation drawer toggle
-        if(this.drawerToggle.onOptionsItemSelected(item)){
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     private void handleLegendVisibility() {
