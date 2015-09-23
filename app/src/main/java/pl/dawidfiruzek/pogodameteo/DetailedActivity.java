@@ -13,10 +13,11 @@ public class DetailedActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detailed);
 
+        MainActivity.FRAGMENT_TYPE fragmentType = (MainActivity.FRAGMENT_TYPE)getIntent().getSerializableExtra(MainActivity.TYPE);
         if(savedInstanceState == null){
-            MainActivity.FRAGMENT_TYPE fragmentType = (MainActivity.FRAGMENT_TYPE)getIntent().getSerializableExtra(MainActivity.TYPE);
             startDetailedFragment(fragmentType);
         }
+        setActionBarTitle(fragmentType);
         setActionBarBlueColor();
         setHomeButtonWithBeforeIcon();
     }
@@ -39,34 +40,52 @@ public class DetailedActivity extends ActionBarActivity {
                         .beginTransaction()
                         .add(R.id.detailed_container, new SearchFragment())
                         .commit();
-                getSupportActionBar().setTitle("Search");
                 break;
             case COMMENT:
                 manager
                         .beginTransaction()
                         .add(R.id.detailed_container, new SynopticsCommentFragment())
                         .commit();
-                getSupportActionBar().setTitle("Comment");
                 break;
             case FAVOURITES:
                 manager
                         .beginTransaction()
                         .add(R.id.detailed_container, new CitiesFragment())
                         .commit();
-                getSupportActionBar().setTitle("Favourites");
                 break;
             case SETTINGS:
                 manager
                         .beginTransaction()
                         .add(R.id.detailed_container, new SettingsFragment())
                         .commit();
-                getSupportActionBar().setTitle("Settings");
                 break;
             case INFO:
                 manager
                         .beginTransaction()
                         .add(R.id.detailed_container, new AboutFragment())
                         .commit();
+                break;
+            default:
+                Log.e(MainActivity.TAG, "Unexpected fragment id passed from main activity");
+                break;
+        }
+    }
+
+    private void setActionBarTitle(MainActivity.FRAGMENT_TYPE fragmentType) {
+        switch(fragmentType) {
+            case SEARCH:
+                getSupportActionBar().setTitle("Search");
+                break;
+            case COMMENT:
+                getSupportActionBar().setTitle("Comment");
+                break;
+            case FAVOURITES:
+                getSupportActionBar().setTitle("Favourites");
+                break;
+            case SETTINGS:
+                getSupportActionBar().setTitle("Settings");
+                break;
+            case INFO:
                 getSupportActionBar().setTitle("Info");
                 break;
             default:
