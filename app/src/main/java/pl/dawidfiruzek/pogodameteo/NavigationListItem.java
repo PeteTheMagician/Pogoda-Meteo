@@ -1,8 +1,5 @@
 package pl.dawidfiruzek.pogodameteo;
 
-/**
- * Created by fks on 2015-05-19.
- */
 public class NavigationListItem {
     private String title;
     private String subtitle;

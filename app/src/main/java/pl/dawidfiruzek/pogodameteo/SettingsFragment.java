@@ -1,21 +1,15 @@
 package pl.dawidfiruzek.pogodameteo;
 
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.PreferenceCategory;
-import android.support.v4.app.Fragment;
 import android.support.v4.preference.PreferenceFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
 public class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener{
     private boolean isPreferencesChanged;
 
@@ -64,6 +58,4 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         }
         super.onPause();
     }
-
-
 }

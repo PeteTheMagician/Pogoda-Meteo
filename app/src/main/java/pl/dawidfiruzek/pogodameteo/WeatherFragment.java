@@ -13,12 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-
-/**
- * Fragment containing Weather Image fetched from the web
- */
 public class WeatherFragment extends Fragment implements AsyncWeatherResponse{
-
     FetchWeatherTask fetchWeatherTask;
     ImageView weatherView;
     ImageView legendView;

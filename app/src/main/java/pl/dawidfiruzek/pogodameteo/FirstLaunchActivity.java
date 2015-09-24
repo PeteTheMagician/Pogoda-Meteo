@@ -3,9 +3,7 @@ package pl.dawidfiruzek.pogodameteo;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 
-
 public class FirstLaunchActivity extends ActionBarActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -17,7 +15,6 @@ public class FirstLaunchActivity extends ActionBarActivity {
         }
 
         setActionBarParams();
-
     }
 
     private void setActionBarParams() {

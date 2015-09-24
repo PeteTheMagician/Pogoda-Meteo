@@ -23,7 +23,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class FetchWeatherTask extends AsyncTask<Void, Void, Bitmap> {
-
     public AsyncWeatherResponse delegate = null;
     private Context content;
     private ProgressDialog progressCircle;
@@ -38,6 +37,7 @@ public class FetchWeatherTask extends AsyncTask<Void, Void, Bitmap> {
 
     @Override
     protected void onPreExecute() {
+        super.onPreExecute();
         getSharedPreferences();
         setAndShowProgressCircle();
     }

@@ -1,6 +1,5 @@
 package pl.dawidfiruzek.pogodameteo;
 
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Html;
@@ -11,19 +10,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
 public class SynopticsCommentFragment extends Fragment implements AsyncCommentResponse{
-
     private FetchCommentTask fetchCommentTask;
     private TextView textComment;
 
     public SynopticsCommentFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public void onPause() {

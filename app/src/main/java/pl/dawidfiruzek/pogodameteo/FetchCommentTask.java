@@ -9,11 +9,7 @@ import org.jsoup.nodes.Element;
 
 import java.net.URL;
 
-/**
- * Created by fks on 2015-06-28.
- */
 public class FetchCommentTask extends AsyncTask <Void, Void, String> {
-
     public AsyncCommentResponse delegate = null;
 
     @Override

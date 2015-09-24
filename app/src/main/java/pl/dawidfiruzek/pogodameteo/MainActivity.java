@@ -21,9 +21,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-
 public class MainActivity extends ActionBarActivity {
-
     public static final String TAG = "Pogoda Meteo";
     public static final String TYPE = "FRAGMENT_TYPE";
     public static final String FRAGMENT_TAG = "WEATHER_FRAGMENT_TAG";
@@ -126,24 +124,26 @@ public class MainActivity extends ActionBarActivity {
         if (id == R.id.action_refresh){
             updateWeather();
             setActionBarTitle();
+            this.drawerLayout.closeDrawers();
             return true;
         }
-        if (id == R.id.action_search_city) {
+        else if (id == R.id.action_search_city) {
             startDetailedActivityWithCustomFragment(FRAGMENT_SEARCH);
             this.drawerLayout.closeDrawers();
             return true;
         }
-        if(id == R.id.action_show_legend){
+        else if(id == R.id.action_show_legend){
             handleLegendVisibility();
             this.drawerLayout.closeDrawers();
             return true;
         }
         // Activate navigation drawer toggle
-        if(this.drawerToggle.onOptionsItemSelected(item)){
+        else if(this.drawerToggle.onOptionsItemSelected(item)){
             return true;
         }
-
-        return super.onOptionsItemSelected(item);
+        else {
+            return super.onOptionsItemSelected(item);
+        }
     }
 
     private void setActionBarTitle() {
