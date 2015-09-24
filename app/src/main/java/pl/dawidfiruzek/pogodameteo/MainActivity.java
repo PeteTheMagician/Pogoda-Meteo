@@ -28,13 +28,12 @@ public class MainActivity extends ActionBarActivity {
     public static final String TYPE = "FRAGMENT_TYPE";
     public static final String FRAGMENT_TAG = "WEATHER_FRAGMENT_TAG";
 
-    public enum FRAGMENT_TYPE {
-        COMMENT,
-        FAVOURITES,
-        SETTINGS,
-        INFO,
-        SEARCH;
-    }
+    public static final int FRAGMENT_COMMENT = 0;
+    public static final int FRAGMENT_FAVOURITES = 1;
+    public static final int FRAGMENT_SETTINGS = 2;
+    public static final int FRAGMENT_INFO = 3;
+    public static final int FRAGMENT_SEARCH = 4;
+
     private SharedPreferences preferenceManager;
     private ListView drawerList;
     private DrawerLayout drawerLayout;
@@ -123,7 +122,7 @@ public class MainActivity extends ActionBarActivity {
             return true;
         }
         if (id == R.id.action_search_city) {
-            startDetailedActivityWithCustomFragment(FRAGMENT_TYPE.SEARCH);
+            startDetailedActivityWithCustomFragment(FRAGMENT_SEARCH);
             this.drawerLayout.closeDrawers();
             return true;
         }
@@ -268,16 +267,16 @@ public class MainActivity extends ActionBarActivity {
                 updateWeather();
                 break;
             case 2: //Comment
-                startDetailedActivityWithCustomFragment(FRAGMENT_TYPE.COMMENT);
+                startDetailedActivityWithCustomFragment(FRAGMENT_COMMENT);
                 break;
             case 3: //Favourite cities
-                startDetailedActivityWithCustomFragment(FRAGMENT_TYPE.FAVOURITES);
+                startDetailedActivityWithCustomFragment(FRAGMENT_FAVOURITES);
                 break;
             case 4: //Settings
-                startDetailedActivityWithCustomFragment(FRAGMENT_TYPE.SETTINGS);
+                startDetailedActivityWithCustomFragment(FRAGMENT_SETTINGS);
                 break;
             case 5: //Info
-                startDetailedActivityWithCustomFragment(FRAGMENT_TYPE.INFO);
+                startDetailedActivityWithCustomFragment(FRAGMENT_INFO);
                 break;
             default:
                 Log.e(TAG, "Unexpected navigation drawer item id");
@@ -303,7 +302,7 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
-    private void startDetailedActivityWithCustomFragment(FRAGMENT_TYPE fragmentType){
+    private void startDetailedActivityWithCustomFragment(int fragmentType){
         Intent intent = new Intent(this, DetailedActivity.class);
         intent.putExtra(TYPE, fragmentType);
         startActivity(intent);
@@ -317,7 +316,7 @@ public class MainActivity extends ActionBarActivity {
         switch (position){
             case 1://City based weather
                 Toast.makeText(this, "dupadupa", Toast.LENGTH_SHORT).show();
-                startDetailedActivityWithCustomFragment(FRAGMENT_TYPE.SEARCH);
+                startDetailedActivityWithCustomFragment(FRAGMENT_SEARCH);
                 break;
             default:
                 break;

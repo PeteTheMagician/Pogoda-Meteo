@@ -13,7 +13,7 @@ public class DetailedActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detailed);
 
-        MainActivity.FRAGMENT_TYPE fragmentType = (MainActivity.FRAGMENT_TYPE)getIntent().getSerializableExtra(MainActivity.TYPE);
+        int fragmentType = getIntent().getIntExtra(MainActivity.TYPE, -1);
         if(savedInstanceState == null){
             startDetailedFragment(fragmentType);
         }
@@ -32,34 +32,34 @@ public class DetailedActivity extends ActionBarActivity {
         }
     }
 
-    private void startDetailedFragment(MainActivity.FRAGMENT_TYPE fragmentType) {
+    private void startDetailedFragment(int fragmentType) {
         android.support.v4.app.FragmentManager manager = getSupportFragmentManager();
         switch(fragmentType) {
-            case SEARCH:
+            case MainActivity.FRAGMENT_SEARCH:
                 manager
                         .beginTransaction()
                         .add(R.id.detailed_container, new SearchFragment())
                         .commit();
                 break;
-            case COMMENT:
+            case MainActivity.FRAGMENT_COMMENT:
                 manager
                         .beginTransaction()
                         .add(R.id.detailed_container, new SynopticsCommentFragment())
                         .commit();
                 break;
-            case FAVOURITES:
+            case MainActivity.FRAGMENT_FAVOURITES:
                 manager
                         .beginTransaction()
                         .add(R.id.detailed_container, new CitiesFragment())
                         .commit();
                 break;
-            case SETTINGS:
+            case MainActivity.FRAGMENT_SETTINGS:
                 manager
                         .beginTransaction()
                         .add(R.id.detailed_container, new SettingsFragment())
                         .commit();
                 break;
-            case INFO:
+            case MainActivity.FRAGMENT_INFO:
                 manager
                         .beginTransaction()
                         .add(R.id.detailed_container, new AboutFragment())
@@ -71,21 +71,21 @@ public class DetailedActivity extends ActionBarActivity {
         }
     }
 
-    private void setActionBarTitle(MainActivity.FRAGMENT_TYPE fragmentType) {
+    private void setActionBarTitle(int fragmentType) {
         switch(fragmentType) {
-            case SEARCH:
+            case MainActivity.FRAGMENT_SEARCH:
                 getSupportActionBar().setTitle("Search");
                 break;
-            case COMMENT:
+            case MainActivity.FRAGMENT_COMMENT:
                 getSupportActionBar().setTitle("Comment");
                 break;
-            case FAVOURITES:
+            case MainActivity.FRAGMENT_FAVOURITES:
                 getSupportActionBar().setTitle("Favourites");
                 break;
-            case SETTINGS:
+            case MainActivity.FRAGMENT_SETTINGS:
                 getSupportActionBar().setTitle("Settings");
                 break;
-            case INFO:
+            case MainActivity.FRAGMENT_INFO:
                 getSupportActionBar().setTitle("Info");
                 break;
             default:
