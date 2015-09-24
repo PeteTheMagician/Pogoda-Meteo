@@ -34,11 +34,18 @@ public class MainActivity extends ActionBarActivity {
     public static final int FRAGMENT_INFO = 3;
     public static final int FRAGMENT_SEARCH = 4;
 
+    private final int DRAWER_ITEM_GPS = 0;
+    private final int DRAWER_ITEM_DEFAULT_CITY = 1;
+    private final int DRAWER_ITEM_COMMENT = 2;
+    private final int DRAWER_ITEM_FAVOURITE_CITIES = 3;
+    private final int DRAWER_ITEM_SETTINGS = 4;
+    private final int DRAWER_ITEM_INFO = 5;
+
     private SharedPreferences preferenceManager;
     private ListView drawerList;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
-    private ArrayList<NavigationListItem> navigationDrawerItems = new ArrayList<NavigationListItem>();
+    private ArrayList<NavigationListItem> navigationDrawerItems = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -254,28 +261,28 @@ public class MainActivity extends ActionBarActivity {
          * Other options - Comment ... Info - open another activity.
          * */
         switch(position){
-            case 0: //GPS based weather
+            case DRAWER_ITEM_GPS:
                 //TODO string + coords?
                 setUpdateMethod("gps");
                 setActionBarTitle();
                 updateWeather();
                 break;
-            case 1: //City based weather
+            case DRAWER_ITEM_DEFAULT_CITY:
                 //TODO get city name from prefs
                 setUpdateMethod("city");
                 setActionBarTitle();
                 updateWeather();
                 break;
-            case 2: //Comment
+            case DRAWER_ITEM_COMMENT:
                 startDetailedActivityWithCustomFragment(FRAGMENT_COMMENT);
                 break;
-            case 3: //Favourite cities
+            case DRAWER_ITEM_FAVOURITE_CITIES:
                 startDetailedActivityWithCustomFragment(FRAGMENT_FAVOURITES);
                 break;
-            case 4: //Settings
+            case DRAWER_ITEM_SETTINGS:
                 startDetailedActivityWithCustomFragment(FRAGMENT_SETTINGS);
                 break;
-            case 5: //Info
+            case DRAWER_ITEM_INFO:
                 startDetailedActivityWithCustomFragment(FRAGMENT_INFO);
                 break;
             default:
