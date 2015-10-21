@@ -1,4 +1,4 @@
-package pl.dawidfiruzek.pogodameteo;
+package pl.dawidfiruzek.pogodameteo.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+
+import pl.dawidfiruzek.pogodameteo.utils.NavigationListItem;
+import pl.dawidfiruzek.pogodameteo.R;
 
 /**
  * Created by fks on 2015-05-19.

@@ -1,4 +1,4 @@
-package pl.dawidfiruzek.pogodameteo;
+package pl.dawidfiruzek.pogodameteo.interfaces;
 
 /**
  * Created by fks on 2015-09-09.

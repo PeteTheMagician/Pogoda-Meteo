@@ -1,4 +1,4 @@
-package pl.dawidfiruzek.pogodameteo;
+package pl.dawidfiruzek.pogodameteo.fragments;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,6 +9,8 @@ import android.support.v4.preference.PreferenceFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import pl.dawidfiruzek.pogodameteo.R;
 
 public class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener{
     private boolean isPreferencesChanged;

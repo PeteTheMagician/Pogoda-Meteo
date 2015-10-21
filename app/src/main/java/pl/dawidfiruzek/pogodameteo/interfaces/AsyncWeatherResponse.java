@@ -1,4 +1,4 @@
-package pl.dawidfiruzek.pogodameteo;
+package pl.dawidfiruzek.pogodameteo.interfaces;
 
 import android.graphics.Bitmap;
 

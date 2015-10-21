@@ -1,4 +1,4 @@
-package pl.dawidfiruzek.pogodameteo;
+package pl.dawidfiruzek.pogodameteo.fragments;
 
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -13,7 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-public class WeatherFragment extends Fragment implements AsyncWeatherResponse{
+import pl.dawidfiruzek.pogodameteo.interfaces.AsyncWeatherResponse;
+import pl.dawidfiruzek.pogodameteo.networking.FetchWeatherTask;
+import pl.dawidfiruzek.pogodameteo.activities.MainActivity;
+import pl.dawidfiruzek.pogodameteo.R;
+
+public class WeatherFragment extends Fragment implements AsyncWeatherResponse {
     FetchWeatherTask fetchWeatherTask;
     ImageView weatherView;
     ImageView legendView;

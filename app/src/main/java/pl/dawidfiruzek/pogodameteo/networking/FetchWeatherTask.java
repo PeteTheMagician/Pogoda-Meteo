@@ -1,4 +1,4 @@
-package pl.dawidfiruzek.pogodameteo;
+package pl.dawidfiruzek.pogodameteo.networking;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -21,6 +21,9 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import pl.dawidfiruzek.pogodameteo.activities.MainActivity;
+import pl.dawidfiruzek.pogodameteo.interfaces.AsyncWeatherResponse;
 
 public class FetchWeatherTask extends AsyncTask<Void, Void, Bitmap> {
     public AsyncWeatherResponse delegate = null;

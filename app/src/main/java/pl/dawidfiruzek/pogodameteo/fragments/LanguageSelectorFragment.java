@@ -1,4 +1,4 @@
-package pl.dawidfiruzek.pogodameteo;
+package pl.dawidfiruzek.pogodameteo.fragments;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,6 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import pl.dawidfiruzek.pogodameteo.R;
+import pl.dawidfiruzek.pogodameteo.activities.MainActivity;
 
 public class LanguageSelectorFragment extends Fragment implements View.OnClickListener {
     public LanguageSelectorFragment() {

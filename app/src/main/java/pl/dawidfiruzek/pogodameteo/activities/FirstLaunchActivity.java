@@ -1,7 +1,10 @@
-package pl.dawidfiruzek.pogodameteo;
+package pl.dawidfiruzek.pogodameteo.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+
+import pl.dawidfiruzek.pogodameteo.fragments.LanguageSelectorFragment;
+import pl.dawidfiruzek.pogodameteo.R;
 
 public class FirstLaunchActivity extends ActionBarActivity {
     @Override

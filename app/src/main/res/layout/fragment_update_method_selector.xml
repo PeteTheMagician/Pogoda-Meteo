@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="pl.dawidfiruzek.pogodameteo.UpdateMethodSelectorFragment">
+    tools:context="pl.dawidfiruzek.pogodameteo.fragments.UpdateMethodSelectorFragment">
 
     <Button
         android:id="@+id/button_use_gps"

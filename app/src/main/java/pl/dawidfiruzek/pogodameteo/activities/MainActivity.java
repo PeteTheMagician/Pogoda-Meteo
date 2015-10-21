@@ -1,4 +1,4 @@
-package pl.dawidfiruzek.pogodameteo;
+package pl.dawidfiruzek.pogodameteo.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,6 +20,11 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+
+import pl.dawidfiruzek.pogodameteo.adapters.DrawerListAdapter;
+import pl.dawidfiruzek.pogodameteo.utils.NavigationListItem;
+import pl.dawidfiruzek.pogodameteo.R;
+import pl.dawidfiruzek.pogodameteo.fragments.WeatherFragment;
 
 public class MainActivity extends ActionBarActivity {
     public static final String TAG = "Pogoda Meteo";

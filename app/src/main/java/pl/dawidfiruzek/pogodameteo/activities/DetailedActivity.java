@@ -1,9 +1,16 @@
-package pl.dawidfiruzek.pogodameteo;
+package pl.dawidfiruzek.pogodameteo.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.MenuItem;
+
+import pl.dawidfiruzek.pogodameteo.R;
+import pl.dawidfiruzek.pogodameteo.fragments.SynopticsCommentFragment;
+import pl.dawidfiruzek.pogodameteo.fragments.AboutFragment;
+import pl.dawidfiruzek.pogodameteo.fragments.CitiesFragment;
+import pl.dawidfiruzek.pogodameteo.fragments.SearchFragment;
+import pl.dawidfiruzek.pogodameteo.fragments.SettingsFragment;
 
 
 public class DetailedActivity extends ActionBarActivity {

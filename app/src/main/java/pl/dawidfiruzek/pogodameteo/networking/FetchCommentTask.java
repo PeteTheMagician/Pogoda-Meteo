@@ -1,4 +1,4 @@
-package pl.dawidfiruzek.pogodameteo;
+package pl.dawidfiruzek.pogodameteo.networking;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -8,6 +8,9 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import java.net.URL;
+
+import pl.dawidfiruzek.pogodameteo.activities.MainActivity;
+import pl.dawidfiruzek.pogodameteo.interfaces.AsyncCommentResponse;
 
 public class FetchCommentTask extends AsyncTask <Void, Void, String> {
     public AsyncCommentResponse delegate = null;

@@ -1,4 +1,4 @@
-package pl.dawidfiruzek.pogodameteo;
+package pl.dawidfiruzek.pogodameteo.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,7 +10,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class SynopticsCommentFragment extends Fragment implements AsyncCommentResponse{
+import pl.dawidfiruzek.pogodameteo.interfaces.AsyncCommentResponse;
+import pl.dawidfiruzek.pogodameteo.networking.FetchCommentTask;
+import pl.dawidfiruzek.pogodameteo.R;
+
+public class SynopticsCommentFragment extends Fragment implements AsyncCommentResponse {
     private FetchCommentTask fetchCommentTask;
     private TextView textComment;
 
