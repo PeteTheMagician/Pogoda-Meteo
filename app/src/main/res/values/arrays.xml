@@ -48,7 +48,6 @@
         <item>city</item>
     </string-array>
 
-
     <array name="navigation_drawer_icons">
         <item>@drawable/ic_gps_fixed_white_24dp</item>
         <item>@drawable/ic_location_city_white_24dp</item>

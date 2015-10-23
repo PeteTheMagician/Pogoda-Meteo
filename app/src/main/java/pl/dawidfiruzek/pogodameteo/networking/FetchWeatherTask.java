@@ -33,6 +33,8 @@ public class FetchWeatherTask extends AsyncTask<Void, Void, Bitmap> {
     private String language;
     private String updateMethod;
     private String defaultCity;
+    private String latitude;
+    private String longitude;
 
     public FetchWeatherTask(Context context){
         this.content = context;
@@ -75,6 +77,8 @@ public class FetchWeatherTask extends AsyncTask<Void, Void, Bitmap> {
         this.language = sharedPreferences.getString("language_preference", "pl");
         this.updateMethod = sharedPreferences.getString("update_preference", "GPS");
         this.defaultCity = sharedPreferences.getString("city_preference", "462");
+        this.latitude = sharedPreferences.getString("preferences_gps_latitude", "0");
+        this.longitude = sharedPreferences.getString("preferences_gps_longitude", "0");
     }
 
     private void setAndShowProgressCircle() {
@@ -92,13 +96,12 @@ public class FetchWeatherTask extends AsyncTask<Void, Void, Bitmap> {
         }
         weatherUri.appendPath("php");
 
-        if(this.updateMethod.equals("GPS")){
+        if(this.updateMethod.equals("gps")){
             Log.d(MainActivity.TAG, "GPS update detected");
             weatherUri
                     .appendPath("mgram_search.php")
-                            //TODO enter actual values from GPS
-                    .appendQueryParameter("NALL", "50")
-                    .appendQueryParameter("EALL", "19").build();
+                    .appendQueryParameter("NALL", latitude)
+                    .appendQueryParameter("EALL", longitude).build();
         }
         else {
             Log.d(MainActivity.TAG, "CITY update detected");

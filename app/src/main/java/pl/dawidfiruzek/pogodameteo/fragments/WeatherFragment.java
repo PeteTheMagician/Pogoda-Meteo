@@ -13,13 +13,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import pl.dawidfiruzek.pogodameteo.interfaces.AsyncGpsResponse;
 import pl.dawidfiruzek.pogodameteo.interfaces.AsyncWeatherResponse;
 import pl.dawidfiruzek.pogodameteo.networking.FetchWeatherTask;
 import pl.dawidfiruzek.pogodameteo.activities.MainActivity;
 import pl.dawidfiruzek.pogodameteo.R;
+import pl.dawidfiruzek.pogodameteo.utils.GpsCoordinates;
 
-public class WeatherFragment extends Fragment implements AsyncWeatherResponse {
+public class WeatherFragment extends Fragment implements AsyncWeatherResponse, AsyncGpsResponse {
     FetchWeatherTask fetchWeatherTask;
+    GpsCoordinates gpsCoordinates;
     ImageView weatherView;
     ImageView legendView;
 
@@ -44,6 +47,7 @@ public class WeatherFragment extends Fragment implements AsyncWeatherResponse {
     @Override
     public void onPause() {
         this.fetchWeatherTask.cancel(true);
+        this.gpsCoordinates.cancel(true);
         super.onPause();
     }
 
@@ -53,6 +57,25 @@ public class WeatherFragment extends Fragment implements AsyncWeatherResponse {
     }
 
     public void downloadAndSetWeather(){
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String updatePreference = sharedPreferences.getString("update_preference", "gps");
+
+        if(updatePreference.equals("gps")){
+            getGpsCoordinates();
+        }
+        else{
+            startFetchingWeather();
+        }
+    }
+
+    private void getGpsCoordinates() {
+        Log.d(MainActivity.TAG, "Started getting GPS coordinates");
+        this.gpsCoordinates = new GpsCoordinates(getActivity());
+        this.gpsCoordinates.delegate = this;
+        this.gpsCoordinates.execute();
+    }
+
+    private void startFetchingWeather() {
         Log.d(MainActivity.TAG, "Started fetching weather from web");
         this.fetchWeatherTask = new FetchWeatherTask(getActivity());
         this.fetchWeatherTask.delegate = this;
@@ -109,5 +132,10 @@ public class WeatherFragment extends Fragment implements AsyncWeatherResponse {
 
     private boolean isOrientationPortrait() {
         return getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT;
+    }
+
+    @Override
+    public void fetchWeatherWithCoordinates() {
+        startFetchingWeather();
     }
 }
