@@ -17,11 +17,10 @@ public class FirstLaunchActivity extends ActionBarActivity {
                     .commit();
         }
 
-        setActionBarParams();
+        setActionBarTitle();
     }
 
-    private void setActionBarParams() {
-        getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.color.blue));
+    private void setActionBarTitle() {
         //TODO make a string value
         getSupportActionBar().setTitle("Initial settings");
     }

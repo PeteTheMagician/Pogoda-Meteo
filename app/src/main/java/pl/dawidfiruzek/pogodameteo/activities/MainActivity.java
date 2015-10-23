@@ -63,7 +63,6 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         this.preferenceManager = PreferenceManager.getDefaultSharedPreferences(this);
         setActionBarTitle();
-        setActionBarBlueColor();
 
         if(isFirstLaunch()){
             startFirstLaunchActivity();
@@ -161,10 +160,6 @@ public class MainActivity extends ActionBarActivity {
             //TODO get city name from prefs
             getSupportActionBar().setTitle("City");
         }
-    }
-
-    private void setActionBarBlueColor() {
-        getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.color.blue));
     }
 
     private Boolean isFirstLaunch(){

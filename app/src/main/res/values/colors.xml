@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <item name="white" type="color">#FFF</item>
     <item name="lightblue" type="color">#e3f2fd</item>
     <item name="blue" type="color">#2196f3</item>
     <item name="darkblue" type="color">#1976d2</item>
+    <item name="black" type="color">#000</item>
     <!-- TODO change colours according to ddesign guidelines -->
     <item name="purple" type="color">#FFAA66CC</item>
     <item name="green" type="color">#FF99CC00</item>

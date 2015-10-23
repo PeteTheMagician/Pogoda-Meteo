@@ -25,7 +25,6 @@ public class DetailedActivity extends ActionBarActivity {
             startDetailedFragment(fragmentType);
         }
         setActionBarTitle(fragmentType);
-        setActionBarBlueColor();
         setHomeButtonWithBeforeIcon();
     }
 
@@ -99,10 +98,6 @@ public class DetailedActivity extends ActionBarActivity {
                 Log.e(MainActivity.TAG, "Unexpected fragment id passed from main activity");
                 break;
         }
-    }
-
-    private void setActionBarBlueColor() {
-        getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.color.blue));
     }
 
     private void setHomeButtonWithBeforeIcon() {

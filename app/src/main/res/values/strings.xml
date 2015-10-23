@@ -1,25 +1,31 @@
 <resources>
     <string name="app_name">Pogoda Meteo</string>
-    <string name="hello_world">Hello world!</string>
+
     <string name="action_settings">Settings</string>
     <string name="action_show_legend">Show legend</string>
     <string name="action_search_city">Search city</string>
+    <string name="action_refresh">Refresh</string>
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_first_start">FirstStartActivity</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+
     <string name="open_drawer">Open navigation drawer</string>
     <string name="close_drawer">Close navigation drawer</string>
-    <string name="title_activity_settings">SettingsActivity</string>
-    <string name="action_refresh">Refresh</string>
+
     <string name="prefs_language">Language</string>
     <string name="language_change">Default Language</string>
+
     <string name="prefs_grid">Grid</string>
     <string name="grid_change">Default Grid</string>
+
     <string name="prefs_update">Update Method</string>
-    <string name="prefs_city">City</string>
     <string name="update_change">Default Update Method</string>
+
+    <string name="prefs_city">City</string>
     <string name="city_change">City</string>
+
     <string name="general_preferences">General Preferences</string>
     <string name="default_city">462</string>
 </resources>
