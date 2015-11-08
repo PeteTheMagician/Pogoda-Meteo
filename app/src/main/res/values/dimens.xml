@@ -6,4 +6,5 @@
     <dimen name="navigation_drawer_max_width_phones">280dp</dimen>
     <dimen name="navigation_drawer_end_margin_phones">56dp</dimen>
     <dimen name="navigation_drawer_separator">8dp</dimen>
+    <dimen name="navigation_drawer_icon_size">40dp</dimen>
 </resources>
