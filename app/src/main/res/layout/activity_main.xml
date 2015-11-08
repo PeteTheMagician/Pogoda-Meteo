@@ -9,14 +9,14 @@
         xmlns:tools="http://schemas.android.com/tools" android:id="@+id/container"
         android:layout_width="match_parent" android:layout_height="match_parent"
         tools:context=".StartActivity" tools:ignore="MergeRootFrame"
-        android:layout_margin="2dp"/>
+        android:layout_margin="@dimen/nano_margin"/>
 
     <!-- The navigation drawer -->
     <ListView android:id="@+id/start_activity_left_drawer_list"
-        android:layout_width="280dp"
+        android:layout_width="@dimen/navigation_drawer_max_width_phones"
         android:layout_height="match_parent"
-        android:layout_marginRight="56dp"
-        android:layout_marginEnd="56dp"
+        android:layout_marginRight="@dimen/navigation_drawer_end_margin_phones"
+        android:layout_marginEnd="@dimen/navigation_drawer_end_margin_phones"
         android:layout_gravity="start"
         android:choiceMode="singleChoice"
         android:divider="@android:color/transparent"
