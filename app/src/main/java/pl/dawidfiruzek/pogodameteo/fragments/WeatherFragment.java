@@ -46,8 +46,12 @@ public class WeatherFragment extends Fragment implements AsyncWeatherResponse, A
 
     @Override
     public void onPause() {
-        this.fetchWeatherTask.cancel(true);
-        this.gpsCoordinates.cancel(true);
+        if(fetchWeatherTask != null) {
+            this.fetchWeatherTask.cancel(true);
+        }
+        if(this.gpsCoordinates != null) {
+            this.gpsCoordinates.cancel(true);
+        }
         super.onPause();
     }
 
