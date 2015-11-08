@@ -1,6 +1,7 @@
 <android.support.v4.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/main_activity_drawer_layout"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -12,8 +13,10 @@
 
     <!-- The navigation drawer -->
     <ListView android:id="@+id/start_activity_left_drawer_list"
-        android:layout_width="240dp"
+        android:layout_width="280dp"
         android:layout_height="match_parent"
+        android:layout_marginRight="56dp"
+        android:layout_marginEnd="56dp"
         android:layout_gravity="start"
         android:choiceMode="singleChoice"
         android:divider="@android:color/transparent"
