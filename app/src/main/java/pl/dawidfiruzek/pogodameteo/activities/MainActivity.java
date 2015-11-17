@@ -328,6 +328,7 @@ public class MainActivity extends ActionBarActivity {
             default:
                 break;
         }
+        this.drawerLayout.closeDrawers();
     }
 
     private boolean isLegendToHide(ImageView legendView) {

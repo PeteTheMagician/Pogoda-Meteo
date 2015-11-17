@@ -1,12 +1,17 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" tools:context="pl.dawidfiruzek.pogodameteo.fragments.SearchFragment">
 
-    <Button
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/edit_text_search"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="New Button"
-        android:id="@+id/button"
-        android:layout_gravity="center" />
+        android:layout_alignParentTop="true"
+        android:textColor="@color/black" />
 
-</FrameLayout>
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edit_text_search"/>
+
+</RelativeLayout>
