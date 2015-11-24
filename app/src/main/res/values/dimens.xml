@@ -7,4 +7,8 @@
     <dimen name="navigation_drawer_end_margin_phones">56dp</dimen>
     <dimen name="navigation_drawer_separator">8dp</dimen>
     <dimen name="navigation_drawer_icon_size">40dp</dimen>
+
+    <dimen name="element_horizontal_margin">16dp</dimen>
+    <dimen name="element_horizontal_small_margin">8dp</dimen>
+    <dimen name="element_vertical_margin">8dp</dimen>
 </resources>
