@@ -40,14 +40,14 @@ public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<CustomRecycl
     }
 
     @Override
-    public void onBindViewHolder(CustomRecyclerViewAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(CustomRecyclerViewAdapter.ViewHolder holder, final int position) {
 
         holder.cityListEntryView.setContent(dataSet.get(position));
 
         holder.cityListEntryView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                delegate.handleOnClick();
+                delegate.handleOnClick(position);
             }
         });
     }

@@ -3,6 +3,7 @@ package pl.dawidfiruzek.pogodameteo.views;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -36,9 +37,10 @@ public class CityListEntryView extends RelativeLayout {
     }
 
     private void init(Context context) {
+        View.inflate(context, R.layout.view_city_list_entry, this);
         cityName = (TextView) findViewById(R.id.city_name);
         cityRegion = (TextView) findViewById(R.id.city_region);
-        cityDistrict = (TextView) findViewById(R.id.city_region);
+        cityDistrict = (TextView) findViewById(R.id.city_district);
         cityFavourite = (ImageView) findViewById(R.id.city_favourite);
     }
 
