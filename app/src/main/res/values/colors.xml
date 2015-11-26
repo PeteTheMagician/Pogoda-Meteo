@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+
     <item name="white" type="color">#FFF</item>
     <item name="lightblue" type="color">#e3f2fd</item>
     <item name="blue" type="color">#2196f3</item>
     <item name="darkblue" type="color">#1976d2</item>
     <item name="black" type="color">#000</item>
+
+    <color name="accent_color" type="color">#0288d1</color>
+
+    <item name="background" type="color">@color/lightblue</item>
+    <item name="focused_backround" type="color">#90caf9</item>
+
     <!-- TODO change colours according to ddesign guidelines -->
     <item name="purple" type="color">#FFAA66CC</item>
     <item name="green" type="color">#FF99CC00</item>
@@ -16,18 +23,5 @@
     <item name="darkorange" type="color">#FFFF8800</item>
     <item name="darkred" type="color">#FFCC0000</item>
 
-    <integer-array name="androidcolors">
-        <item>@color/blue</item>
-        <item>@color/purple</item>
-        <item>@color/green</item>
-        <item>@color/orange</item>
-        <item>@color/red</item>
-        <item>@color/darkblue</item>
-        <item>@color/darkpurple</item>
-        <item>@color/darkgreen</item>
-        <item>@color/darkorange</item>
-        <item>@color/darkred</item>
-        <item>@color/lightblue</item>
-    </integer-array>
 
 </resources>

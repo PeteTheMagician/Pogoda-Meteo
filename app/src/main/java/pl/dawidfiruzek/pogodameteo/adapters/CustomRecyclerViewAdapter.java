@@ -47,7 +47,7 @@ public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<CustomRecycl
         holder.cityListEntryView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                delegate.handleOnClick(position);
+                delegate.handleOnClick(dataSet.get(position));
             }
         });
     }

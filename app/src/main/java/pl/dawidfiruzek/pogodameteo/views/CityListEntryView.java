@@ -2,7 +2,9 @@ package pl.dawidfiruzek.pogodameteo.views;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -44,18 +46,45 @@ public class CityListEntryView extends RelativeLayout {
         cityFavourite = (ImageView) findViewById(R.id.city_favourite);
     }
 
-    //TODO set actual content
-    public void setContent(CityListEntryView element){
-        cityName = element.cityName;
-        cityRegion = element.cityRegion;
-        cityDistrict = element.cityDistrict;
-        cityFavourite = element.cityFavourite;
-    }
-
     public void setContent(String cityName, String cityRegion, String cityDistrict, Drawable cityFavourite){
         this.cityName.setText(cityName);
         this.cityRegion.setText(cityRegion);
         this.cityDistrict.setText(cityDistrict);
         this.cityFavourite.setImageDrawable(cityFavourite);
+    }
+
+    public void setContent(CityListEntryView element){
+        setContent(
+                element.cityName.getText().toString(),
+                element.cityRegion.getText().toString(),
+                element.cityDistrict.getText().toString(),
+                element.cityFavourite.getDrawable()
+        );
+    }
+
+    public String getCity() {
+        return cityName.getText().toString();
+    }
+
+    public String getRegion() {
+        return cityRegion.getText().toString();
+    }
+
+    public String getDistrict() {
+        return cityDistrict.getText().toString();
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        int action = event.getAction();
+
+        if(action == MotionEvent.ACTION_DOWN) {
+            setBackgroundColor(ContextCompat.getColor(getContext(), R.color.focused_backround));
+        }
+        else if (action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_CANCEL) {
+            setBackgroundColor(ContextCompat.getColor(getContext(), R.color.background));
+        }
+
+        return super.onTouchEvent(event);
     }
 }

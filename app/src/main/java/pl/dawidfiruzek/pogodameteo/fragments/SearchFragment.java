@@ -49,7 +49,7 @@ public class SearchFragment extends Fragment implements RecyclerViewEventHandler
 
     private void setRecycler() {
         recyclerView.setHasFixedSize(true);
-        
+
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
 
@@ -58,7 +58,7 @@ public class SearchFragment extends Fragment implements RecyclerViewEventHandler
     }
 
     @Override
-    public void handleOnClick(int position) {
-        Log.e("Recycler", "Clicked" + position);
+    public void handleOnClick(CityListEntryView element) {
+        Log.e("Recycler", "Clicked" + element.getCity() + element.getRegion() + element.getDistrict());
     }
 }

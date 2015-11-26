@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.util.Log;
 import android.view.Menu;
@@ -21,12 +20,12 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import pl.dawidfiruzek.pogodameteo.adapters.DrawerListAdapter;
-import pl.dawidfiruzek.pogodameteo.utils.NavigationListItem;
 import pl.dawidfiruzek.pogodameteo.R;
+import pl.dawidfiruzek.pogodameteo.adapters.DrawerListAdapter;
 import pl.dawidfiruzek.pogodameteo.fragments.WeatherFragment;
+import pl.dawidfiruzek.pogodameteo.utils.NavigationListItem;
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends BaseActivity {
     public static final String TAG = "Pogoda Meteo";
     public static final String TYPE = "FRAGMENT_TYPE";
     public static final String FRAGMENT_TAG = "WEATHER_FRAGMENT_TAG";

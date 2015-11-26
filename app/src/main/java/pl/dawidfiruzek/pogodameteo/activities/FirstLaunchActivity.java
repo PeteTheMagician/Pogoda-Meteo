@@ -1,12 +1,11 @@
 package pl.dawidfiruzek.pogodameteo.activities;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 
-import pl.dawidfiruzek.pogodameteo.fragments.LanguageSelectorFragment;
 import pl.dawidfiruzek.pogodameteo.R;
+import pl.dawidfiruzek.pogodameteo.fragments.LanguageSelectorFragment;
 
-public class FirstLaunchActivity extends ActionBarActivity {
+public class FirstLaunchActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
