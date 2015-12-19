@@ -15,12 +15,5 @@ public class FirstLaunchActivity extends BaseActivity {
                     .add(R.id.first_start_container, new LanguageSelectorFragment())
                     .commit();
         }
-
-        setActionBarTitle();
-    }
-
-    private void setActionBarTitle() {
-        //TODO make a string value
-        getSupportActionBar().setTitle("Initial settings");
     }
 }

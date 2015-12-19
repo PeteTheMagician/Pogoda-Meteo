@@ -16,14 +16,14 @@ import java.util.List;
 import pl.dawidfiruzek.pogodameteo.R;
 import pl.dawidfiruzek.pogodameteo.adapters.CustomRecyclerViewAdapter;
 import pl.dawidfiruzek.pogodameteo.interfaces.RecyclerViewEventHandler;
-import pl.dawidfiruzek.pogodameteo.views.CityListEntryView;
+import pl.dawidfiruzek.pogodameteo.utils.CityListEntryDataHandler;
 
 public class SearchFragment extends Fragment implements RecyclerViewEventHandler {
 
     private CustomRecyclerViewAdapter recyclerViewAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerView recyclerView;
-    private List<CityListEntryView> dataSet = new ArrayList<>();
+    private List<CityListEntryDataHandler> dataSet = new ArrayList<>();
 
     public SearchFragment() {
         // Required empty public constructor
@@ -42,9 +42,10 @@ public class SearchFragment extends Fragment implements RecyclerViewEventHandler
     }
 
     private void setUpDataSet() {
-        CityListEntryView cityListEntryView = new CityListEntryView(getContext());
-        cityListEntryView.setContent("Testow", "Testowo", "Testowski", ContextCompat.getDrawable(getContext(), R.drawable.ic_favorite_border_white_24dp));
-        dataSet.add(cityListEntryView);
+        //TODO get db entries here
+        CityListEntryDataHandler cityListEntry = new CityListEntryDataHandler();
+        cityListEntry.setContent("Testow", "Testowo", "Testowski", ContextCompat.getDrawable(getContext(), R.drawable.ic_favorite_border_white_24dp));
+        dataSet.add(cityListEntry);
     }
 
     private void setRecycler() {
@@ -58,7 +59,7 @@ public class SearchFragment extends Fragment implements RecyclerViewEventHandler
     }
 
     @Override
-    public void handleOnClick(CityListEntryView element) {
-        Log.e("Recycler", "Clicked" + element.getCity() + element.getRegion() + element.getDistrict());
+    public void handleOnClick(CityListEntryDataHandler element) {
+        Log.e("Recycler", "Clicked" + element.cityName + element.cityRegion + element.cityDistrict);
     }
 }

@@ -31,4 +31,9 @@
 
     <string name="general_preferences">General Preferences</string>
     <string name="default_city">462</string>
+    <string name="search_hint">Enter the city name</string>
+    <string name="title_initial_settings">Initial settings</string>
+    <string name="preference_category_language" translatable="false">language_preference</string>
+    <string name="preference_language_polish" translatable="false">pl</string>
+    <string name="preference_language_english" translatable="false">en</string>
 </resources>

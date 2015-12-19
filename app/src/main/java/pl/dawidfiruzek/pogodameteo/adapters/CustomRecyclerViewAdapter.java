@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pl.dawidfiruzek.pogodameteo.interfaces.RecyclerViewEventHandler;
+import pl.dawidfiruzek.pogodameteo.utils.CityListEntryDataHandler;
 import pl.dawidfiruzek.pogodameteo.views.CityListEntryView;
 
 /**
@@ -15,7 +16,7 @@ import pl.dawidfiruzek.pogodameteo.views.CityListEntryView;
  */
 public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<CustomRecyclerViewAdapter.ViewHolder> {
     public RecyclerViewEventHandler delegate;
-    private List<CityListEntryView> dataSet = new ArrayList<>();
+    private List<CityListEntryDataHandler> dataSet = new ArrayList<>();
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public CityListEntryView cityListEntryView;
@@ -26,7 +27,7 @@ public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<CustomRecycl
         }
     }
 
-    public CustomRecyclerViewAdapter(List<CityListEntryView> dataSet, RecyclerViewEventHandler delegate) {
+    public CustomRecyclerViewAdapter(List<CityListEntryDataHandler> dataSet, RecyclerViewEventHandler delegate) {
         this.dataSet = dataSet;
         this.delegate = delegate;
     }
@@ -40,14 +41,14 @@ public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<CustomRecycl
     }
 
     @Override
-    public void onBindViewHolder(CustomRecyclerViewAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(final CustomRecyclerViewAdapter.ViewHolder holder, int position) {
 
-        holder.cityListEntryView.setContent(dataSet.get(position));
+        holder.cityListEntryView.setContent(dataSet.get(holder.getAdapterPosition()));
 
         holder.cityListEntryView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                delegate.handleOnClick(dataSet.get(position));
+                delegate.handleOnClick(dataSet.get(holder.getAdapterPosition()));
             }
         });
     }

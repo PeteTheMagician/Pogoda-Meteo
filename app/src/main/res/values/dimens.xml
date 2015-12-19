@@ -11,4 +11,5 @@
     <dimen name="element_horizontal_margin">16dp</dimen>
     <dimen name="element_horizontal_small_margin">8dp</dimen>
     <dimen name="element_vertical_margin">8dp</dimen>
+    <dimen name="element_vertical_big_margin">16dp</dimen>
 </resources>

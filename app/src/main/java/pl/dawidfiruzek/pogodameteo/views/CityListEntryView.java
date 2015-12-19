@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import pl.dawidfiruzek.pogodameteo.R;
+import pl.dawidfiruzek.pogodameteo.utils.CityListEntryDataHandler;
 
 /**
  * Created by fks on 2015-11-25.
@@ -46,19 +47,19 @@ public class CityListEntryView extends RelativeLayout {
         cityFavourite = (ImageView) findViewById(R.id.city_favourite);
     }
 
-    public void setContent(String cityName, String cityRegion, String cityDistrict, Drawable cityFavourite){
+    private void setContent(String cityName, String cityRegion, String cityDistrict, Drawable cityFavourite){
         this.cityName.setText(cityName);
         this.cityRegion.setText(cityRegion);
         this.cityDistrict.setText(cityDistrict);
         this.cityFavourite.setImageDrawable(cityFavourite);
     }
 
-    public void setContent(CityListEntryView element){
+    public void setContent(CityListEntryDataHandler element){
         setContent(
-                element.cityName.getText().toString(),
-                element.cityRegion.getText().toString(),
-                element.cityDistrict.getText().toString(),
-                element.cityFavourite.getDrawable()
+                element.cityName,
+                element.cityRegion,
+                element.cityDistrict,
+                element.cityFavourite
         );
     }
 

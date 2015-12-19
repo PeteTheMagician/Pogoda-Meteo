@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,8 +27,13 @@ public class GridSelectorFragment extends Fragment implements View.OnClickListen
 
         v.findViewById(R.id.button_grid_um).setOnClickListener(this);
         v.findViewById(R.id.button_grid_coamps).setOnClickListener(this);
+        setActionBarTitle();
 
         return v;
+    }
+
+    private void setActionBarTitle() {
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.title_initial_settings);
     }
 
     @Override
