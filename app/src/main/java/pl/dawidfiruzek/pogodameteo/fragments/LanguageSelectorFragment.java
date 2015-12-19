@@ -59,7 +59,7 @@ public class LanguageSelectorFragment extends Fragment implements View.OnClickLi
 
         getActivity().getSupportFragmentManager().beginTransaction()
                 .setCustomAnimations(R.anim.abc_fade_in, R.anim.abc_fade_out, R.anim.abc_fade_in, R.anim.abc_fade_out)
-                .replace(R.id.first_start_container, new GridSelectorFragment())
+                .replace(R.id.default_container, new GridSelectorFragment())
                 .addToBackStack(null)
                 .commit();
     }

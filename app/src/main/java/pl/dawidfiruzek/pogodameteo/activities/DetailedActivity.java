@@ -17,7 +17,6 @@ public class DetailedActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detailed);
 
         int fragmentType = getIntent().getIntExtra(MainActivity.TYPE, -1);
         if(savedInstanceState == null){
@@ -43,31 +42,31 @@ public class DetailedActivity extends BaseActivity {
             case MainActivity.FRAGMENT_SEARCH:
                 manager
                         .beginTransaction()
-                        .add(R.id.detailed_container, new SearchFragment())
+                        .add(R.id.default_container, new SearchFragment())
                         .commit();
                 break;
             case MainActivity.FRAGMENT_COMMENT:
                 manager
                         .beginTransaction()
-                        .add(R.id.detailed_container, new SynopticsCommentFragment())
+                        .add(R.id.default_container, new SynopticsCommentFragment())
                         .commit();
                 break;
             case MainActivity.FRAGMENT_FAVOURITES:
                 manager
                         .beginTransaction()
-                        .add(R.id.detailed_container, new CitiesFragment())
+                        .add(R.id.default_container, new CitiesFragment())
                         .commit();
                 break;
             case MainActivity.FRAGMENT_SETTINGS:
                 manager
                         .beginTransaction()
-                        .add(R.id.detailed_container, new SettingsFragment())
+                        .add(R.id.default_container, new SettingsFragment())
                         .commit();
                 break;
             case MainActivity.FRAGMENT_INFO:
                 manager
                         .beginTransaction()
-                        .add(R.id.detailed_container, new AboutFragment())
+                        .add(R.id.default_container, new AboutFragment())
                         .commit();
                 break;
             default:

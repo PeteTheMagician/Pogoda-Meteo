@@ -50,6 +50,11 @@ public class MainActivity extends BaseActivity {
     private ArrayList<NavigationListItem> navigationDrawerItems = new ArrayList<>();
 
     @Override
+    public int getContentViewId() {
+        return R.layout.activity_main;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         /**
          * On the first start of the app new activity to set default values is run.
@@ -68,7 +73,6 @@ public class MainActivity extends BaseActivity {
         }
         else {
             Log.d(TAG, "Loading WeatherFragment");
-            setContentView(R.layout.activity_main);
             if (savedInstanceState == null) {
                 startWeatherFragment();
             }

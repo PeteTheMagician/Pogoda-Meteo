@@ -57,7 +57,7 @@ public class GridSelectorFragment extends Fragment implements View.OnClickListen
         }
         getActivity().getSupportFragmentManager().beginTransaction()
                 .setCustomAnimations(R.anim.abc_fade_in, R.anim.abc_fade_out, R.anim.abc_fade_in, R.anim.abc_fade_out)
-                .replace(R.id.first_start_container, new UpdateMethodSelectorFragment())
+                .replace(R.id.default_container, new UpdateMethodSelectorFragment())
                 .addToBackStack(null)
                 .commit();
     }
