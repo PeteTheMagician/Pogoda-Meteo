@@ -90,7 +90,7 @@ public class FetchWeatherTask extends AsyncTask<Void, Void, Bitmap> {
     }
 
     private void buildWeatherUri(Uri.Builder weatherUri) {
-        weatherUri.scheme("http").authority("new.meteo.pl");
+        weatherUri.scheme("http").authority("www.meteo.pl");
         if(this.gridModel.equals("um")){
             weatherUri.appendPath("um");
         }
@@ -181,7 +181,7 @@ public class FetchWeatherTask extends AsyncTask<Void, Void, Bitmap> {
 
     @NonNull
     private String getMeteogramImgAddress(String meteorogramParams) {
-        String meteorogramImg = "http://new.meteo.pl";
+        String meteorogramImg = "http://www.meteo.pl";
         if(this.gridModel.equals("um")) {
             meteorogramImg += "/um/metco/mgram_pict.php";
         }
